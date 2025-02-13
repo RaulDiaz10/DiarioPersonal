@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Journal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Pantalla de Inicio -->
+    <div id="inicio">
+        <h1>Mood Journal</h1>
+        <button onclick="iniciarSesion()">Iniciar Sesión</button>
+        <button onclick="registrarse()">Registro</button>
+    </div>
+
+    <hr>
+
+    <!-- Tablero Principal -->
+    <div id="tablero">
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#entradas">Entradas</a></li>
+                <li><a href="#estado-animo">Estado de Ánimo</a></li>
+                <li><a href="#metas">Metas</a></li>
+                <li><a href="#configuracion">Configuración</a></li>
+            </ul>
+        </nav>
+        <section id="resumen-diario">
+            <h2>Resumen Diario</h2>
+            <p>Estado de Ánimo: 😊</p>
+            <p>Última Entrada: "Hoy fue un gran día"</p>
+        </section>
+    </div>
+
+    <hr>
+
+    <!-- Página de Entrada Diaria -->
+    <div id="entrada-diaria">
+        <h2>Escribir Entrada</h2>
+        <form>
+            <textarea placeholder="Escribe tu entrada aquí..."></textarea>
+            <button type="button">Agregar Imagen</button>
+            <button type="button">Agregar Enlace</button>
+        </form>
+        <div>
+            <p>Estado de Ánimo:</p>
+            <button>😊</button>
+            <button>😞</button>
+            <button>😡</button>
+            <button>😃</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Seguimiento del Estado de Ánimo -->
+    <div id="estado-animo">
+        <h2>Seguimiento del Estado de Ánimo</h2>
+        <canvas id="grafico-estado-animo"></canvas>
+    </div>
+
+    <hr>
+
+    <!-- Metas y Reflexiones -->
+    <div id="metas">
+        <h2>Metas Personales</h2>
+        <ul>
+            <li>Meta 1</li>
+            <li>Meta 2</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <!-- Configuración de Privacidad -->
+    <div id="configuracion">
+        <h2>Configuración de Privacidad</h2>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password">
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
