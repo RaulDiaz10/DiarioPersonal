@@ -1,0 +1,92 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F5F5; /* Blanco Suave */
+    margin: 0;
+    padding: 0;
+}
+
+/* Encabezado */
+header {
+    background-color: #4E342E; /* Café Oscuro */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #A1887F; /* Café Claro */
+    border: none;
+    color: white;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    background-color: #795548; /* Café */
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+}
+
+nav ul li a:hover {
+    background-color: #D7CCC8; /* Crema */
+}
+
+/* Contenido principal */
+article {
+    padding: 20px;
+    text-align: center;
+}
+
+article div {
+    margin-bottom: 20px;
+    border: 1px solid #795548; /* Café */
+    padding: 10px;
+    background-color: white;
+}
+
+/* Formulario de entrada */
+textarea {
+    width: 80%;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #4E342E; /* Café Oscuro */
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #A1887F; /* Café Claro */
+    border: none;
+    color: white;
+}
+
+/* Pie de página 
+footer {
+    background-color: #4E342E; 
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 
+} 
+*/

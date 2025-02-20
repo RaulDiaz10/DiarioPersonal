@@ -1,8 +1,77 @@
-<!DOCTYPE html>
+<!DOCTYPE html> <!-- Declaración del tipo de documento HTML -->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mood Journal</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Mood Journal</title> <!-- Título de la página -->
+    <link rel="stylesheet" href="./Styles/Styles.css">
 </head>
+<body>
+    <header>
+        <!-- Encabezado de la página -->
+        <div> <!-- Sección dentro del encabezado -->
+            <h1>Bienvenido a Mood Journal</h1>
+            <p>Por favor, inicia sesión para continuar.</p>
+            <button>Iniciar Sesión</button> <!-- Botón para iniciar sesión -->
+            <button>Registro</button> <!-- Botón para registrarse -->
+        </div>
+    </header>
+
+    <nav>
+        <!-- Barra de navegación (Enlaces) -->
+        <ul>
+            <li><a href="#">Inicio</a></li> 
+            <li><a href="#">Entradas</a></li>
+            <li><a href="#">Estado de Ánimo</a></li>
+            <li><a href="#">Metas</a></li> 
+            <li><a href="#">Configuración</a></li> 
+        </ul>
+    </nav>
+
+    <aside></aside> <!-- Lateral de la página (izquierda, puede estar vacío o utilizarse en el futuro) -->
+
+    <article>
+        <div> <!-- Sección de entradas -->
+            <h2>Escribir Entrada</h2>
+            <form> <!-- Formulario para escribir una nueva entrada -->
+                <textarea placeholder="Escribe tu entrada aquí..."></textarea> <!-- Área de texto para la entrada -->
+                <button type="button">Agregar Imagen</button> 
+            </form>
+            <div> <!-- Estado de ánimo -->
+                <p>Estado de Ánimo:</p>
+                <button>😊</button>
+                <button>😞</button> 
+                <button>😡</button> 
+                <button>😃</button> 
+            </div>
+        </div>
+
+        <div> <!-- Sección de seguimiento del estado de ánimo -->
+            <h2>Seguimiento del Estado de Ánimo</h2>
+            <canvas></canvas> <!-- Área para gráficos de estado de ánimo -->
+        </div>
+
+        <div> <!-- Sección de metas -->
+            <h2>Metas Personales</h2>
+            <ul> <!-- Lista de metas personales -->
+                <li>Meta 1</li> 
+                <li>Meta 2</li> 
+            </ul>
+        </div>
+
+        <div> <!-- Sección de configuración -->
+            <h2>Configuración de Privacidad</h2>
+            <label for="password">Contraseña:</label> 
+            <input type="password" id="password"> <!-- Campo de entrada para la contraseña -->
+        </div>
+    </article>
+
+    <aside></aside> <!-- Lateral de la página (derecha, puede estar vacío o utilizarse en el futuro) -->
+
+    <footer>
+        <!-- Pie de página -->
+        <!-- Información de derechos de autor -->
+    </footer>
+</body>
+</html>
+
