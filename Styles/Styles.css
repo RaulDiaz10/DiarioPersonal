@@ -1,34 +1,70 @@
 /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #F5F5F5; /* Blanco Suave */
+    background-color: #F5F5F5;
+    color: #000; /* Color de texto para modo claro */
     margin: 0;
     padding: 0;
 }
 
+/*
+body.dark-mode {
+    background-color: #28292c; 
+    color: #FFF; 
+}
+*/
+
 /* Encabezado */
 header {
-    background-color: #4E342E; /* Café Oscuro */
+    background-color: #4E342E; 
     color: white;
     padding: 20px;
     text-align: center;
 }
 
+header.dark-mode {
+    background-color: #1a1a1a; /* Fondo modo oscuro para encabezado */
+}
+
+header h1 {
+    font-size: 2.5em; /* Tamaño destacado del título */
+    margin-bottom: 10px; /* Espaciado entre el título y el mensaje */
+}
+
+header p {
+    font-size: 1.2em;
+    margin-bottom: 20px; /* Espaciado entre el mensaje y los botones */
+}
+
+header .button-style {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+nav ul {
+    background-color: #795548;
+}
+
+nav ul.dark-mode {
+    background-color: #1a1a1a; /* Fondo modo oscuro para navegación */
+}
+
+/* Botones del encabezado */
 header button {
     margin: 10px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #A1887F; /* Café Claro */
+    background-color: #A1887F;
     border: none;
     color: white;
 }
 
+/* Barra de navegación */
 nav ul {
-    list-style-type: none;
     padding: 0;
-    text-align: center;
-    background-color: #795548; /* Café */
+    display: flex;
+    justify-content: space-around;
 }
 
 nav ul li {
@@ -44,7 +80,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #D7CCC8; /* Crema */
+    background-color: #D7CCC8;
 }
 
 /* Contenido principal */
@@ -53,20 +89,51 @@ article {
     text-align: center;
 }
 
-article div {
-    margin-bottom: 20px;
-    border: 1px solid #795548; /* Café */
-    padding: 10px;
-    background-color: white;
+article h2 {
+    font-size: 1.8em;
+    color: #4E342E; /* Color del texto del título */
+    margin-bottom: 15px;
 }
 
-/* Formulario de entrada */
+article p {
+    font-size: 1.2em;
+    line-height: 1.6; /* Mejora la legibilidad del texto */
+    margin-bottom: 20px;
+}
+
+.entradas-grid {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+}
+
+.entradas-grid .estado-animo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.entradas-grid .estado-animo p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.entradas-grid .estado-animo button {
+    margin: 5px;
+}
+
+.entradas-grid .entradas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 textarea {
-    width: 80%;
-    height: 100px;
+    width: 100%;
+    height: 150px;
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #4E342E; /* Café Oscuro */
+    border: 1px solid #4E342E;
 }
 
 button {
@@ -74,19 +141,246 @@ button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #A1887F; /* Café Claro */
+    background-color: #A1887F;
     border: none;
     color: white;
 }
 
-/* Pie de página 
-footer {
-    background-color: #4E342E; 
+/* Estilos específicos para todos los botones de la página */
+/* Fuente: https://uiverse.io/aasisodiya/nasty-cat-19 */
+.button-style {
+    background-color: #eee;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    width: 10em;
+    border-radius: 1rem;
+    color: #A1887F;
+    box-shadow: 0 0.4rem #dfd9d9;
+    cursor: pointer;
+}
+
+.button-style:active {
     color: white;
-    text-align: center;
-    padding: 10px;
+    box-shadow: 0 0.2rem #dfd9d9;
+    transform: translateY(0.2rem);
+}
+
+.button-style:hover:not(:disabled) {
+    background: #A1887F;
+    color: white;
+    text-shadow: 0 0.1rem #bcb4b4;
+}
+
+.button-style:disabled {
+    cursor: auto;
+    color: grey;
+}
+
+section ul {
+    list-style: disc;
+    margin-left: 40px; /* Alineación de las listas */
+}
+
+footer p {
+    font-size: 1em;
+    line-height: 1.5;
+    margin-top: 10px; /* Espaciado dentro del pie de página */
+}
+
+/* Estilos article */
+/* Sección de Información */
+article div {
+    background-color: #FFFFFF; /* Fondo claro */
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Suavizar el contenedor */
+    max-width: 1200px;
+}
+
+article h2 {
+    color: #4E342E; /* Café oscuro */
+    text-transform: uppercase; /* Mayúsculas para títulos */
+    text-align: left; /* Alineación izquierda */
+}
+
+article p {
+    text-align: justify; /* Justificar texto */
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+/* Listas con viñetas cuadradas */
+section ul {
+    list-style: square;
+    margin: 15px 40px; /* Sangría adicional */
+}
+
+section ul li {
+    margin-bottom: 10px;
+    text-align: left; /* Alineación izquierda */
+}
+
+/* --- Formulario emergente de inicio de sesión --- */
+
+/* Contenedor emergente */
+.popup-form {
+    display: none; /* Oculto inicialmente */
     position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFFFFF; /* Fondo blanco */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    z-index: 1000; /* Prioridad alta */
+    width: 300px; /* Ancho fijo */
+    text-align: center; /* Contenido centrado */
+}
+
+/* Estilo del título */
+.popup-form h2 {
+    color: #4E342E; /* Café oscuro */
+    margin-bottom: 15px; /* Espaciado */
+}
+
+/* Etiquetas de campos */
+.popup-form label {
+    display: block;
+    text-align: left; /* Alineación izquierda */
+    margin-bottom: 5px;
+    font-size: 1.2em;
+}
+
+/* Campos de entrada */
+.popup-form input {
+    width: 100%; /* Ancho completo */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #D7CCC8; /* Borde claro */
+    border-radius: 5px; /* Bordes suaves */
+}
+
+/* Botones */
+.popup-form button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+}
+
+.popup-form .button-style {
+    background-color: #81C784; /* Verde claro */
+    color: white;
+}
+
+.popup-form .close-btn {
+    background-color: #E57373; /* Rojo claro */
+    color: white;
+}
+
+.popup-form .close-btn:hover {
+    background-color: #EF5350; /* Rojo más oscuro en hover */
+}
+
+/* Mostrar el formulario */
+.popup-form.active {
+    display: block; /* Visible cuando se activa */
+}
+
+/* Fondo semitransparente detrás del formulario */
+body::before {
+    content: "";
+    display: none; /* Oculto inicialmente */
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    bottom: 
-} 
-*/
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
+}
+
+/* Mostrar fondo con formulario */
+body.popup-active::before {
+    display: block; /* Visible cuando el formulario está activo */
+}
+
+
+/* --- Estilos para el seguimiento de Metas --- */
+
+/* Contenedor Principal */
+.metas-container {
+    background-color: #FFFFFF; /* Fondo blanco */
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 900px; /* Limitar ancho */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    text-align: center; /* Centrar contenido */
+}
+
+/* Títulos */
+.metas-container h2, 
+.metas-container h3 {
+    color: #4E342E; /* Café oscuro */
+    margin-bottom: 15px;
+}
+
+/* Formulario para Añadir Meta */
+.añadir-meta form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaciado entre elementos */
+}
+
+.añadir-meta input,
+.añadir-meta textarea,
+.añadir-meta select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #D7CCC8; /* Borde sutil */
+    width: 100%; /* Ajustar al ancho del contenedor */
+}
+
+.añadir-meta button.add-meta {
+    background-color: #81C784; /* Verde claro */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.añadir-meta button.add-meta:hover {
+    background-color: #64B5F6; /* Azul claro en hover */
+}
+
+/* Metas Activas */
+.metas-activas ul {
+    list-style: square; /* Viñetas cuadradas */
+    text-align: left; /* Alineación izquierda */
+    margin: 20px auto;
+    padding-left: 40px; /* Sangría */
+}
+
+.metas-activas ul li {
+    font-size: 1.2em;
+    line-height: 1.5; /* Espaciado entre líneas */
+    color: #000; /* Texto negro */
+    margin-bottom: 10px; /* Espaciado entre elementos */
+}
+
+/* Progreso */
+.progreso .grafico {
+    margin: 20px auto;
+    width: 100%;
+    height: 150px;
+    background-color: #F5F5F5; /* Fondo claro */
+    border-radius: 8px; /* Bordes redondeados */
+    border: 1px solid #D7CCC8; /* Borde sutil */
+}
