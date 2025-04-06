@@ -1,0 +1,79 @@
+<!DOCTYPE html> <!-- Declaración del tipo de documento HTML -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metas - Mood Journal</title> <!-- Título de la página -->
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css"> <!-- Enlace a hoja de estilos -->
+    <link rel="stylesheet" href="./Styles/Styles.css">
+    <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.jpeg">
+</head>
+<body>
+    <header>
+        <!-- Encabezado de la página -->
+        <div>
+            <h1>Mood Journal</h1>
+            <nav>
+                <!-- Barra de navegación (Enlaces) -->
+                <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="./indexEntradas.html">Entradas</a></li>
+                    <li><a href="./indexEstadoAnimo.html">Estado de Ánimo</a></li>
+                    <li><a href="./indexMetas.html">Metas</a></li>
+                    <li><a href="./indexConfiguracion.html"><i class="fa fa-cog"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <article>
+        <div class="metas-container">
+            <h2>Gestión de Metas</h2>
+
+            <!-- Sección para añadir metas -->
+            <section class="añadir-meta">
+                <h3>Añadir Nueva Meta</h3>
+                <form>
+                    <input type="text" placeholder="Nombre de la meta" required>
+                    <textarea placeholder="Descripción de la meta"></textarea>
+                    <select>
+                        <option value="salud">Salud</option>
+                        <option value="profesional">Profesional</option>
+                        <option value="personal">Personal</option>
+                    </select>
+                    <input type="date" required>
+                    <button type="submit" class="add-meta">Añadir Meta</button>
+                </form>
+            </section>
+
+            <!-- Metas activas -->
+            <section class="metas-activas">
+                <h3>Metas Activas</h3>
+                <ul>
+                    <li>
+                        <b>Meta:</b> Aprender ingles <br> 
+                        <b>Plazo:</b> 15/04/2025
+                    </li>
+                    <li>
+                        <b>Meta:</b> Hacer ejercicio 3 veces a la semana <br> 
+                        <b>Plazo:</b> 20/04/2025
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Progreso -->
+            <section class="progreso">
+                <h3>Progreso</h3>
+                <p>¡Has completado el 50% de tus metas este mes!</p>
+                <div class="grafico">
+                    <!-- Espacio reservado para visualización gráfica -->
+                </div>
+            </section>
+        </div>
+    </article>
+
+    <footer>
+        <p>&copy; 2025 Mood Journal. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

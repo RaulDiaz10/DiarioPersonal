@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - Mood Journal</title>
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./Styles/Styles.css">
+    <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.jpeg">
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Mood Journal</h1>
+            <nav>
+                <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="./indexEntradas.html">Entradas</a></li>
+                    <li><a href="./indexEstadoAnimo.html">Estado de Ánimo</a></li>
+                    <li><a href="./indexMetas.html">Metas</a></li>
+                    <li><a href="./indexConfiguracion.html"><i class="fa fa-cog"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Desde Uiverse.io por Madflows --> 
+    <div class="toggle-switch">
+        <label class="switch-label">
+            <input type="checkbox" class="checkbox" id="darkModeToggle">
+            <span class="slider"></span>
+        </label>
+    </div>  
+
+    <article>
+        <div>
+            <h2>Configuración de Privacidad</h2>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password">
+        </div>
+    </article>
+
+    <footer>
+        <!-- Información de derechos de autor -->
+    </footer>
+
+    <!-- 
+    <script>
+        // JavaScript para alternar entre modo oscuro y claro
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('change', function() {
+            document.body.classList.toggle('dark-mode');
+            document.querySelector('header').classList.toggle('dark-mode');
+            document.querySelector('nav ul').classList.toggle('dark-mode');
+        });
+    </script>
+    -->
+</body>
+</html>
