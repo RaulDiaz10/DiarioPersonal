@@ -86,7 +86,7 @@ nav ul li a:hover {
 /* Contenido principal */
 article {
     padding: 20px;
-    text-align: center;
+    text-align: left;
 }
 
 article h2 {
@@ -101,6 +101,7 @@ article p {
     margin-bottom: 20px;
 }
 
+/* Entradas*/
 .entradas-grid {
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -214,7 +215,8 @@ article p {
 /* Listas con viñetas cuadradas */
 section ul {
     list-style: square;
-    margin: 15px 40px; /* Sangría adicional */
+    margin: 0; /* Sin margen adicional para pegarlo a la izquierda */
+    padding-left: 20px; /* Ajusta según lo necesario para alinear las viñetas */
 }
 
 section ul li {
@@ -223,7 +225,6 @@ section ul li {
 }
 
 /* --- Formulario emergente de inicio de sesión --- */
-
 /* Contenedor emergente */
 .popup-form {
     display: none; /* Oculto inicialmente */
@@ -273,19 +274,6 @@ section ul li {
     border: none;
 }
 
-.popup-form .button-style {
-    background-color: #81C784; /* Verde claro */
-    color: white;
-}
-
-.popup-form .close-btn {
-    background-color: #E57373; /* Rojo claro */
-    color: white;
-}
-
-.popup-form .close-btn:hover {
-    background-color: #EF5350; /* Rojo más oscuro en hover */
-}
 
 /* Mostrar el formulario */
 .popup-form.active {
