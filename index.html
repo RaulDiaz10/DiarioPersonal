@@ -4,80 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mood Journal</title>
-    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css"> <!-- Enlace a Font Awesome -->
-    <link rel="stylesheet" href="./Styles/Styles.css"> <!-- Hoja de estilos personalizada -->
-    <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.jpeg"> <!-- Ícono del sitio -->
+    <link rel="stylesheet" href="./Styles/Styles.css">
+    <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.png">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> 
+    <!-- Si requieres Font Awesome (u otra librería) para íconos, agrégala aquí; de lo contrario, usamos el emoji ⚙️ -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
 </head>
 <body>
     <header>
-        <div>
-            <h1>Bienvenido a Mood Journal</h1>
-            <p>Tu compañero diario para registrar tus emociones, metas y pensamientos.</p>
-            <button class="button-style iniciar-sesion-btn">Iniciar Sesión</button>
-            <button class="button-style registro-btn">Registro</button>
+        <div class="container">
+            <div class="header-flex">
+
+                <!-- Logo -->
+                <div class="logo-container">
+                    <img src="./Recursos/Imagenes D.P/inconoBuscador.png" alt="Logo Mood Journal">
+                </div>
+
+                <!-- Título y descripción -->
+                <div class="title-container">
+                    <h1>Mood Journal</h1>
+                    <p>Tu compañero diario para registrar tus emociones, metas y pensamientos.</p>
+                </div>
+
+                <!-- Menú de ayuda -->
+                <div class="help-menu">
+                    <button class="help-btn" id="toggleHelpMenu">Ayuda ▼</button>
+                    <div class="help-options">
+                        <a href="#" id="dejarComentario">Dejar comentario</a>
+                        <a href="#" id="pedirInformacion">Pedir información</a>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Contenedor de autenticación -->
+                <div class="auth-container">
+                    <button id="iniciarSesionBtn" class="button-style">Iniciar Sesión</button>
+                    <button id="registroBtn" class="button-style">Registro</button>
+                </div>
         </div>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="./indexInicio.html">Inicio Temporal</a></li>
-        </ul>
-    </nav>
+    <!-- Ventana emergente para dejar comentario -->
+    <div class="popup-form" id="comentarioPopup">
+        <h2>Dejar Comentario</h2>
 
-    <article>
-        <div>
-            <h2>¿Qué es Mood Journal?</h2>
-            <p>
-                Mood Journal es una plataforma diseñada para ayudarte a llevar un seguimiento 
-                de tus emociones, metas y progreso diario. Nos enfocamos en brindarte un espacio seguro, 
-                personalizable y funcional para que desarrolles una mejor relación contigo mismo.
-            </p>
-            <p>
-                Aquí podrás documentar tus pensamientos, reflexionar sobre tus logros y analizar 
-                patrones emocionales para desarrollar hábitos positivos. Nuestra interfaz intuitiva 
-                facilita la experiencia de uso.
-            </p>
-        </div>
-        <div>
-            <h2>¿Cómo funciona?</h2>
-            <p>
-                Mood Journal te permite añadir entradas diarias relacionadas con tus emociones, establecer 
-                metas personales, y visualizar tu progreso mediante herramientas simples pero efectivas. 
-                Todo esto está diseñado para que te conozcas mejor y alcances tu máximo potencial.
-            </p>
-        </div>
-        <div>
-            <h2>Beneficios Clave</h2>
-            <ul>
-                <li><b>Mejora tu bienestar emocional:</b> Identifica patrones y trabaja en tus emociones.</li>
-                <li><b>Organización y enfoque:</b> Establece metas claras y realiza un seguimiento de tus progresos.</li>
-                <li><b>Reflexión activa:</b> Revisa tus logros y motívate a mejorar cada día.</li>
-                <li><b>Personalización:</b> Configura la plataforma para que se ajuste a tus necesidades específicas.</li>
-            </ul>
-            <p>
-                Si buscas una herramienta para explorar tus emociones, establecer metas y mantenerte inspirado, 
-                Mood Journal es la opción ideal.
-            </p>
-        </div>
-    </article>
+        <label for="nombreComentario">Nombre:</label>
+        <input type="text" id="nombreComentario" placeholder="Tu nombre">
 
-    <!-- Formulario emergente para inicio de sesión -->
-    <div class="popup-form" id="login-popup">
-        <form class="form-container">
-            <h2>Iniciar Sesión</h2>
-            <label for="username">Usuario:</label>
-            <input type="text" id="username" name="username" placeholder="Ingresa tu nombre de usuario" required>
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
-            <button type="submit" class="button-style">Iniciar Sesión</button>
-            <button type="button" class="close-btn">Cerrar</button>
-        </form>
+        <label for="correoComentario">Correo:</label>
+        <input type="email" id="correoComentario" placeholder="Tu correo">
+
+        <label for="motivoComentario">Motivo:</label>
+        <select id="motivoComentario">
+            <option value="" disabled selected>Selecciona un motivo...</option>
+            <option value="sugerencia">Sugerencia</option>
+            <option value="problema">Reportar un problema</option>
+            <option value="otro">Otro</option>
+        </select>
+
+        <!-- Cuadro de comentario que aparece al elegir un motivo -->
+        <textarea id="comentarioTexto" placeholder="Escribe tu comentario aquí..." style="display: none;"></textarea>
+
+        <div class="popup-buttons">
+            <button id="closeComentarioPopup">Cerrar</button>
+            <button id="enviarComentario" style="display: none;">Enviar</button>
+        </div>
     </div>
 
+    <!-- Ventana emergente para solicitar información -->
+    <div class="popup-form" id="infoContactoPopup">
+        <h2>Solicitar Información / Contacto</h2>
+
+        <div class="contact-info">
+            <p><strong>Teléfono:</strong> 33107970454</p>
+            <p><strong>Email:</strong> MoodJournal@gmail.com</p>
+            <p><strong>Horario de atención:</strong> Lunes a Viernes, 9 AM - 6 PM</p>
+        </div>
+
+        <label for="nombreInfoContacto">Nombre:</label>
+        <input type="text" id="nombreInfoContacto" placeholder="Tu nombre">
+
+        <label for="correoInfoContacto">Correo:</label>
+        <input type="email" id="correoInfoContacto" placeholder="Tu correo">
+
+        <label for="mensajeInfoContacto">Mensaje:</label>
+        <textarea id="mensajeInfoContacto" placeholder="Escribe tu mensaje aquí..."></textarea>
+
+        <div class="popup-buttons">
+            <button id="closeInfoContactoPopup">Cerrar</button>
+            <button id="enviarInfoContacto">Enviar</button>
+        </div>
+    </div>
+
+    <!-- Mensaje de agradecimiento -->
+    <div class="popup-form" id="agradecimientoPopup" style="display: none;">
+        <h2>¡Gracias!</h2>
+        <p>Tu solicitud ha sido recibida y la revisaremos pronto.</p>
+        <button id="closeAgradecimientoPopup">Cerrar</button>
+    </div>
+
+    <main>
+        <div class="container main-container">
+            <section class="info-section">
+                <div class="section-content">
+                    <h2>¿Qué es Mood Journal?</h2>
+                    <div class="text-block">
+                        <p>
+                            Mood Journal es una plataforma diseñada para ayudarte a llevar un seguimiento
+                            de tus emociones, metas y progreso diario. Nos enfocamos en brindarte un espacio seguro,
+                            personalizable y funcional para que desarrolles una mejor relación contigo mismo.
+                        </p>
+                        <p>
+                            Aquí podrás documentar tus pensamientos, reflexionar sobre tus logros y analizar
+                            patrones emocionales para desarrollar hábitos positivos. Nuestra interfaz intuitiva
+                            facilita la experiencia de uso.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="image-wrapper">
+                <img src="./Recursos/Imagenes D.P/ejemploUso.png" alt="Persona usando Mood Journal">
+            </div>
+
+            <section class="info-section">
+                <div class="section-content">
+                    <h2>¿Cómo funciona?</h2>
+                    <div class="text-block">
+                        <p>
+                            Mood Journal te permite añadir entradas diarias relacionadas con tus emociones, establecer
+                            metas personales, y visualizar tu progreso mediante herramientas simples pero efectivas.
+                            Todo esto está diseñado para que te conozcas mejor y alcances tu máximo potencial.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="info-section">
+                <div class="section-content">
+                    <h2>Beneficios Clave</h2>
+                    <div class="text-block">
+                        <ul>
+                            <li><strong>Mejora tu bienestar emocional:</strong> Identifica patrones y trabaja en tus emociones.</li>
+                            <li><strong>Organización y enfoque:</strong> Establece metas claras y realiza un seguimiento de tus progresos.</li>
+                            <li><strong>Reflexión activa:</strong> Revisa tus logros y motívate a mejorar cada día.</li>
+                            <li><strong>Personalización:</strong> Configura la plataforma para que se ajuste a tus necesidades específicas.</li>
+                        </ul>
+                        <p>
+                            Si buscas una herramienta para explorar tus emociones, establecer metas y mantenerte inspirado,
+                            Mood Journal es la opción ideal.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+<!-- Ventana emergente para iniciar sesión -->
+<div class="popup-form" id="loginPopup">
+    <h2>Iniciar Sesión</h2>
+    <label for="username">Correo:</label> <!-- 🔹 Cambio de id -->
+    <input type="text" id="username">
+    <label for="password">Contraseña:</label> <!-- 🔹 Cambio de id -->
+    <input type="password" id="password">
+    <button id="closeLoginPopup">Cerrar</button>
+    <button id="loginBtn">Iniciar sesión</button>
+</div>
+
+<!-- Ventana emergente para registro -->
+<div class="popup-form" id="registroPopup">
+    <h2>Registro</h2>
+    <label for="newUsername">Usuario:</label>
+    <input type="text" id="newUsername">
+    <label for="newEmail">Correo:</label>
+    <input type="email" id="newEmail">
+    <label for="newPassword">Contraseña:</label>
+    <input type="password" id="newPassword">
+    <button id="closeRegistroPopup">Cerrar</button>
+    <button id="registrarBtn">Registrarse</button>
+</div>
+
     <footer>
-        <p>&copy; 2025 Mood Journal. Todos los derechos reservados.</p>
+        <div class="container footer-container">
+            <p>&copy; 2025 Mood Journal. Todos los derechos reservados.</p>
+        </div>
     </footer>
 
-    <script src="./JS/Script.js"></script> 
+    <!-- Script principal -->
+    <script src="./JS/Script.js"></script>
 </body>
 </html>

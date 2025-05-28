@@ -1,0 +1,10 @@
+{
+  "prueba@gmail.com": [
+    {
+      "nombre": "Usuario Prueba",
+      "correo": "prueba@example.com",
+      "motivo": "Sugerencia",
+      "mensaje": "Me gustaría ver más opciones en el menú de ayuda."
+    }
+  ]
+}

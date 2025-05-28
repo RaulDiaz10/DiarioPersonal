@@ -1,72 +1,71 @@
-<!DOCTYPE html> <!-- Declaración del tipo de documento HTML -->
+<!DOCTYPE html> 
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estado de Ánimo - Mood Journal</title> <!-- Título de la página -->
-    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css"> <!-- Enlace a hoja de estilos -->
+    <title>Estado de Ánimo - Mood Journal</title>
     <link rel="stylesheet" href="./Styles/Styles.css">
-    <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.jpeg">
+    <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
     <header>
-        <!-- Encabezado de la página -->
-        <div> <!-- Sección dentro del encabezado -->
-            <h1>Mood Journal</h1>
-            <nav>
-                <!-- Barra de navegación (Enlaces) -->
-                <ul>
-                    <li><a href="./index.html">Inicio</a></li>
-                    <li><a href="./indexEntradas.html">Entradas</a></li>
-                    <li><a href="./indexEstadoAnimo.html">Estado de Ánimo</a></li>
-                    <li><a href="./indexMetas.html">Metas</a></li>
-                    <li><a href="./indexConfiguracion.html"><i class="fa fa-cog"></i></a></li>
-                </ul>
-            </nav>
-        </div>
+        <h1>Mood Journal</h1>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Inicio</a></li>
+                <li><a href="./indexEntradas.html">Entradas</a></li>
+                <li><a href="./indexEstadoAnimo.html">Estado de Ánimo</a></li>
+                <li><a href="./indexMetas.html">Metas</a></li>
+                <button id="config-btn" class="config-icon">⚙️</button>
+            </ul>
+        </nav>
     </header>
 
     <article class="estado-animo-tracker">
         <h2>Seguimiento del Estado de Ánimo</h2>
 
-        <!-- Calendario Interactivo -->
+        <!-- 📌 Calendario Interactivo con Flatpickr -->
         <section class="calendario">
             <h3>Tu Calendario Emocional</h3>
+            <input type="text" id="calendario-picker">
+            <p>* Selecciona un día para registrar tu estado de ánimo.</p>
         </section>
 
-        <!-- Resumen Mensual -->
-        <section class="resumen-estados">
-            <h3>Resumen Mensual</h3>
-            <div class="grafico">
-                <!-- Espacio para gráficos -->
-                <p>Aquí se mostrará el gráfico de evolución emocional.</p>
+        <!-- 📌 Gráfica de Evolución Emocional con Chart.js -->
+        <section class="grafico-estados">
+            <h3>Evolución de tu Estado de Ánimo</h3>
+            <div class="grafico-container">
+                <canvas id="grafico-animo"></canvas>
             </div>
-            <p><b>Estado predominante del mes:</b> 😊 Feliz</p>
         </section>
 
-        <!-- Días Destacados -->
-        <section class="dias-destacados">
+        <!-- 📌 Días Destacados -->
+        <section class="dias-destacados">   
             <h3>Días Destacados</h3>
-            <ul>
+            <ul id="lista-dias-destacados">
                 <li><b>03/04:</b> Día tranquilo 😌</li>
                 <li><b>05/04:</b> Día estresante 😡</li>
                 <li><b>06/04:</b> Día feliz 😊</li>
             </ul>
         </section>
 
-        <!-- Reflexiones Automáticas -->
+        <!-- 📌 Reflexiones Automáticas -->
         <section class="reflexiones">
             <h3>Reflexiones Automáticas</h3>
-            <p>
+            <p id="mensaje-reflexion">
                 “Esta semana parece que hubo un progreso positivo en tu estado de ánimo. 
-                ¡Sigue cuidándote y disfrutando de momentos que te hagan sentir bien, no te rindas!”
+                ¡Sigue cuidándote y disfrutando de momentos que te hagan sentir bien!”
             </p>
         </section>
     </article>
 
     <footer>
-        <!-- Pie de página -->
         <p>&copy; 2025 Mood Journal. Todos los derechos reservados.</p>
     </footer>
+
+    <script src="./JS/Script.js"></script>
 </body>
 </html>
