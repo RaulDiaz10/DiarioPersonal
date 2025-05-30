@@ -1,0 +1,59 @@
+font-family
+    Especifica la familia de fuentes para el texto de un elemento.
+    Ejemplo: font-family: Arial, sans-serif;
+
+background-color
+    Establece el color de fondo de un elemento.
+    Ejemplo: background-color: #f5f5f5;
+
+margin
+    Define el espacio exterior alrededor de un elemento.
+    Ejemplo: margin: 0;
+
+padding
+    Define el espacio interior dentro de un elemento, entre el contenido y el borde.
+    Ejemplo: padding: 20px;
+
+text-align
+    Establece la alineación horizontal del texto dentro de un elemento.
+    Ejemplo: text-align: center;
+
+color
+    Define el color del texto de un elemento.
+    Ejemplo: color: white;
+
+list-style-type
+    Establece el tipo de marcador para los elementos de una lista.
+    Ejemplo: list-style-type: none;
+
+display
+    Define cómo se muestra un elemento en el documento.
+    Ejemplo: display: inline;
+
+width
+    Establece el ancho de un elemento.
+    Ejemplo: width: 80%;
+
+height
+    Establece la altura de un elemento.
+    Ejemplo: height: 100px;
+
+cursor
+    Establece el tipo de cursor que se mostrará cuando el puntero esté sobre un elemento.
+    Ejemplo: cursor: pointer;
+
+hover (pseudoclase)
+    Aplica estilos a un elemento cuando el puntero del mouse está sobre él.
+    nav ul li a:hover { background-color: #555; }
+
+position
+    Descripción: Establece el método de posicionamiento para un elemento.
+    Ejemplo: position: fixed;
+
+bottom
+    Descripción: Establece la posición inferior de un elemento posicionado.
+    Ejemplo: bottom: 0;
+
+link (atributo)
+    Vincula una hoja de estilos externa al documento HTML.
+    Ejemplo: <link rel="stylesheet" href="styles.css">
