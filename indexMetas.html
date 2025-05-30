@@ -6,9 +6,8 @@
     <title>Metas - Mood Journal</title>
     <link rel="stylesheet" href="./Styles/Styles.css">
     <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.png">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body id="indexMetasPage">
     <header>
         <h1>Mood Journal</h1>
         <nav>
@@ -17,34 +16,77 @@
                 <li><a href="./indexEntradas.html">Entradas</a></li>
                 <li><a href="./indexEstadoAnimo.html">Estado de Ánimo</a></li>
                 <li><a href="./indexMetas.html">Metas</a></li>
-                <button id="config-btn" class="config-icon">⚙️</button>
+                <button id="toggleHelpMenu" class="config-icon">⚙️</button>
             </ul>
         </nav>
     </header>
 
+    <div class="help-options common-page-menu" id="commonPageHelpMenu">
+        <button class="close-menu" id="closeCommonHelpMenu">X</button>
+        <button id="dejarComentario">Dejar Comentario</button>
+        <button id="pedirInformacion">Pedir Información</button>
+    </div>
+    <div class="popup-form" id="comentarioPopup">
+        <button id="closeComentarioPopup" class="close-btn">X</button>
+        <h2>Dejar un Comentario</h2>
+        <label for="nombreComentario">Tu Nombre:</label>
+        <input type="text" id="nombreComentario" required>
+        <label for="correoComentario">Tu Correo:</label>
+        <input type="email" id="correoComentario" required>
+        <label for="tipoComentario">Motivo:</label>
+        <select id="tipoComentario" required>
+            <option value="">Selecciona un motivo</option>
+            <option value="sugerencia">Sugerencia</option>
+            <option value="problema">Reportar un Problema</option>
+            <option value="felicitacion">Felicitación</option>
+            <option value="otro">Otro</option>
+        </select>
+        <textarea id="comentarioTexto" placeholder="Escribe tu comentario aquí..." style="display:none;" required></textarea>
+        <button id="enviarComentario" style="display:none;">Enviar Comentario</button>
+    </div>
+
+    <div class="popup-form" id="infoContactoPopup">
+        <button id="closeInfoContactoPopup" class="close-btn">X</button>
+        <h2>Pedir Información</h2>
+        <label for="nombreInfoContacto">Tu Nombre:</label>
+        <input type="text" id="nombreInfoContacto" required>
+        <label for="correoInfoContacto">Tu Correo:</label>
+        <input type="email" id="correoInfoContacto" required>
+        <textarea id="mensajeInfoContacto" placeholder="Escribe tu pregunta o solicitud aquí..." required></textarea>
+        <button id="enviarInfoContacto">Enviar Solicitud</button>
+    </div>
+
+    <div class="popup-form" id="agradecimientoPopup">
+        <button id="closeAgradecimientoPopup" class="close-btn">X</button>
+        <h2>¡Gracias!</h2>
+        <p>Tu comentario/solicitud ha sido enviado. Te responderemos pronto.</p>
+    </div>
     <article class="metas-container">
         <h2>Gestión de Metas</h2>
 
         <div class="grid-layout">
-            <!-- 📌 Formulario para añadir metas con distribución correcta -->
             <section class="añadir-meta">
                 <h3>Añadir Nueva Meta</h3>
                 <form id="meta-form">
                     <div class="form-grid">
                         <input type="text" id="meta-nombre" placeholder="Nombre de la meta" required>
                         <div class="form-group">
-                            <label for="meta-categoria">Tipo de Meta:</label>
-                            <select id="meta-categoria">
-                                <option value="salud">Salud</option>
-                                <option value="profesional">Profesional</option>
+                            <label for="meta-categoria">Categoría:</label>
+                            <select id="meta-categoria" required>
+                                <option value="">Selecciona una categoría</option>
                                 <option value="personal">Personal</option>
+                                <option value="profesional">Profesional</option>
+                                <option value="salud">Salud</option>
+                                <option value="financiera">Financiera</option>
+                                <option value="educacion">Educación</option>
+                                <option value="otro">Otro</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="meta-plazo">Fecha Límite:</label>
                             <input type="date" id="meta-plazo" required>
                         </div>
-                        <textarea id="meta-descripcion" placeholder="Descripción de la meta"></textarea>
+                        <textarea id="meta-descripcion" placeholder="Descripción de la meta" required></textarea>
                     </div>
                     <div class="botones">
                         <button type="submit" class="add-meta">Añadir Meta</button>
@@ -52,15 +94,12 @@
                 </form>
             </section>
 
-            <!-- 📌 Metas activas con opciones -->
             <section class="metas-activas">
                 <h3>Metas Activas</h3>
                 <div id="lista-metas" class="metas-list">
-                    <!-- Metas generadas dinámicamente -->
                 </div>
             </section>
 
-            <!-- 📌 Gráfica de progreso -->
             <section class="progreso">
                 <h3>Progreso de Metas</h3>
                 <p id="mensaje-progreso">¡Tus metas se actualizarán aquí!</p>
@@ -75,6 +114,7 @@
         <p>&copy; 2025 Mood Journal. Todos los derechos reservados.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./JS/Script.js"></script>
 </body>
 </html>

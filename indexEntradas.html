@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./Styles/Styles.css">
     <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.png">
 </head>
-<body>
+<body id="indexEntradasPage">
     <header>
         <h1>Mood Journal</h1>
         <nav>
@@ -16,52 +16,81 @@
                 <li><a href="./indexEntradas.html">Entradas</a></li>
                 <li><a href="./indexEstadoAnimo.html">Estado de Ánimo</a></li>
                 <li><a href="./indexMetas.html">Metas</a></li>
-                <button id="config-btn" class="config-icon">⚙️</button>
+                <button id="toggleHelpMenu" class="config-icon">⚙️</button>
             </ul>
         </nav>
     </header>
 
-    <!-- 📌 Contenedor principal con estructura en columnas -->
+    <div class="help-options common-page-menu" id="commonPageHelpMenu">
+        <button class="close-menu" id="closeCommonHelpMenu">X</button>
+        <button id="dejarComentario">Dejar Comentario</button>
+        <button id="pedirInformacion">Pedir Información</button>
+    </div>
+    <div class="popup-form" id="comentarioPopup">
+        <button id="closeComentarioPopup" class="close-btn">X</button>
+        <h2>Dejar un Comentario</h2>
+        <label for="nombreComentario">Tu Nombre:</label>
+        <input type="text" id="nombreComentario" required>
+        <label for="correoComentario">Tu Correo:</label>
+        <input type="email" id="correoComentario" required>
+        <label for="tipoComentario">Motivo:</label>
+        <select id="tipoComentario" required>
+            <option value="">Selecciona un motivo</option>
+            <option value="sugerencia">Sugerencia</option>
+            <option value="problema">Reportar un Problema</option>
+            <option value="felicitacion">Felicitación</option>
+            <option value="otro">Otro</option>
+        </select>
+        <textarea id="comentarioTexto" placeholder="Escribe tu comentario aquí..." style="display:none;" required></textarea>
+        <button id="enviarComentario" style="display:none;">Enviar Comentario</button>
+    </div>
+
+    <div class="popup-form" id="infoContactoPopup">
+        <button id="closeInfoContactoPopup" class="close-btn">X</button>
+        <h2>Pedir Información</h2>
+        <label for="nombreInfoContacto">Tu Nombre:</label>
+        <input type="text" id="nombreInfoContacto" required>
+        <label for="correoInfoContacto">Tu Correo:</label>
+        <input type="email" id="correoInfoContacto" required>
+        <textarea id="mensajeInfoContacto" placeholder="Escribe tu pregunta o solicitud aquí..." required></textarea>
+        <button id="enviarInfoContacto">Enviar Solicitud</button>
+    </div>
+
+    <div class="popup-form" id="agradecimientoPopup">
+        <button id="closeAgradecimientoPopup" class="close-btn">X</button>
+        <h2>¡Gracias!</h2>
+        <p>Tu comentario/solicitud ha sido enviado. Te responderemos pronto.</p>
+    </div>
     <div class="entradas-container">
-        <!-- Sección de emojis (1/4 de la pantalla) -->
         <div class="estado-animo">
             <p>Estado de Ánimo:</p>
             <button class="mood-btn" data-tooltip="Feliz">😊</button>
             <button class="mood-btn" data-tooltip="Triste">😞</button>
-            <button class="mood-btn" data-tooltip="Frustrado">😡</button>
+            <button class="mood-btn" data-tooltip="Enojado">😡</button>
             <button class="mood-btn" data-tooltip="Tranquilo">😃</button>
         </div>
 
-        <!-- Sección de entradas (3/4 de la pantalla) -->
         <div class="entrada-section">
             <h2>Escribir Entrada</h2>
             <form id="entrada-form">
                 <textarea id="entrada-text" placeholder="Escribe tu entrada aquí..."></textarea>
                 <div class="button-container">
                     <button type="submit" class="button-style">Enviar</button>
-                    <button class="button-style edit-button">Editar</button>
-                    <button class="button-style file-button">Archivo</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Historial de Entradas -->
-<!-- Contenedor centrado para historial -->
-<div class="historial">
-    <h2>Entradas Anteriores</h2>
-    <ul id="lista-entradas">
-        <!-- Ejemplo de formato de entrada -->
-        <li class="entrada-item">
-            <span>Entrada de ejemplo...</span>
-            <div class="action-buttons">
-                <button class="edit-button">Editar</button>
-                <button class="delete-button">Eliminar</button>
-            </div>
-        </li>
-    </ul>
-</div>
+    <div class="historial">
+        <h2>Entradas Anteriores</h2>
+        <ul id="lista-entradas">
+        </ul>
+    </div>
 
-<script src="./JS/script.js"></script>
+    <footer>
+        <p>&copy; 2025 Mood Journal. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="./JS/Script.js"></script>
 </body>
 </html>

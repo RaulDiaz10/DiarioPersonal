@@ -1,4 +1,4 @@
-/* ============================================
+/* ===========================================
    ESTILOS GENERALES - INDEX PRINCIPAL
 ============================================ */
 body {
@@ -6,17 +6,44 @@ body {
     background-color: #F5F5F5;
     color: #000;
     margin: 0;
-    padding: 0;
+    padding: 0; 
+    transition: background-color 0.3s, color 0.3s; /* Transición para modo oscuro */
 }
 
+/* Contenedor principal para centrar el contenido */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Overlay para cuando un popup está activo */
+body.popup-active::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semitransparente negro */
+    z-index: 999; /* Asegúrate de que esté debajo del popup (z-index: 1000) */
+    backdrop-filter: blur(2px); /* Efecto de desenfoque opcional */
+}
+
+/* Estilo general para todos los botones, a menos que se sobrescriba */
 button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
     cursor: pointer;
-    background-color: #A1887F;
+    background-color: #A1887F; /* Color base */
     border: none;
     color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #8D6E63; /* Color más oscuro al pasar el ratón */
 }
 
 textarea {
@@ -25,6 +52,8 @@ textarea {
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #4E342E;
+    border-radius: 5px;
+    box-sizing: border-box; /* Incluye padding y border en el ancho/alto */
 }
 
 /* --- Botón interactivo reutilizable (estilo especial) --- */
@@ -46,643 +75,1126 @@ textarea {
     transform: translateY(0.2rem);
 }
 
-.button-style:hover:not(:disabled) {
-    background: #A1887F;
-    color: white;
-    text-shadow: 0 0.1rem #bcb4b4;
-}
-
-.button-style:disabled {
-    cursor: auto;
-    color: grey;
-}
-
-/* ============================================
-   ENCABEZADO GENERAL
-============================================ */
+/* Header */
 header {
-    background-color: #4E342E;
-    color: white;
-    padding: 40px 0 20px;
+    background-color: #4E342E; /* Fondo del header */
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex; /* Para organizar los elementos del header en una columna */
+    flex-direction: column; /* Apila los elementos del header (top-flex y hero-text) */
+    align-items: center; /* Centra el contenido horizontalmente */
 }
 
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.header-flex {
+.header-top-flex {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Distribuye el espacio entre los hijos */
+    align-items: center; /* Centra verticalmente los hijos */
+    width: 100%; /* Ocupa todo el ancho del header */
+    max-width: 1200px; /* Asegura que no se estire demasiado */
+    padding: 8px; /* Igual que .container */
+    margin-bottom: -15px; /* Espacio entre la parte superior del header y el texto de bienvenida */
+}
+
+.brand-container {
+    display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    /* No se mueve este div, se mantiene a la izquierda por justify-content: space-between; */
 }
 
-/* Logo redondo */
 .logo-container img {
-    width: px;
-    height: 75px;
-    border-radius: 50%;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Título y descripción */
-.title-container {
-    text-align: center;
-    flex: 1;
+    height: 50px; /* Ajusta el tamaño del logo */
+    margin-right: 15px;
 }
 
 .title-container h1 {
-    font-size: 2.5em;
-    color: white;
-    margin-bottom: 10px;
+    margin: 0;
+    font-size: 35px;
+    color: #ffffff; /* Color del título */
 }
 
-.title-container p {
-    font-size: 1.1em;
-    color: #D7CCC8;
-    margin-bottom: 0;
+.header-right-buttons {
+    display: flex; /* Para que los botones de auth y el menú de ayuda se alineen horizontalmente */
+    align-items: center;
+    gap: 20px; /* Espacio entre los botones de autenticación y el menú de ayuda */
 }
 
-.image-wrapper img {
-    width: 150%; /* 📌 Ajusta el tamaño, puedes reducirlo más */
-    max-width: 500px; /* 📌 Tamaño máximo para que no se agrande demasiado */
-    height: auto; /* 📌 Mantiene la proporción */
-    display: block;
-    margin: 0 auto; /* 📌 Centra la imagen */
-    border-radius: 8px; /* 📌 Agrega bordes redondeados si deseas */
-}
-
-
-/* Botones de inicio/registro */
-.auth-container {
+.auth-buttons {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 30px 0 20px;
+    gap: 10px; /* Espacio entre los botones de autenticación */
 }
 
-/* Menú de ayuda */
 .help-menu {
-    position: relative;
-    display: inline-block;
-}
-
-.help-btn {
-    background-color: #A1887F;
-    padding: 10px 15px;
-    font-size: 16px;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
+    position: relative; /* Para posicionar el menú desplegable */
 }
 
 .help-options {
-    display: none;
+    display: none; /* Oculto por defecto, se mostrará con JS */
     position: absolute;
+    top: calc(100% + 5px); /* Debajo del botón de configuración */
     right: 0;
-    background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 100;
+    min-width: 180px; /* Ancho mínimo para el menú de opciones */
     padding: 10px;
-    width: 180px;
-    text-align: left;
-    z-index: 1000;
-}
-
-.help-options a {
-    display: block;
-    padding: 8px;
-    color: #4E342E;
-    text-decoration: none;
-}
-
-.help-options a:hover {
-    background-color: #D7CCC8;
-}
-
-.help-menu:hover .help-options {
-    display: block;
-}
-
-/* Ventanas emergentes - menú de ayuda */
-.popup-form {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #FFFFFF;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 280px;
-    text-align: center;
-    z-index: 1000;
-}
-
-/* Ajuste de los campos dentro de la ventana emergente */
-.popup-form select,
-.popup-form textarea,
-.popup-form input {
-    width: 90%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #D7CCC8;
     border-radius: 5px;
 }
 
-/* Alinear correctamente los botones */
-.popup-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.popup-buttons button {
-    padding: 10px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    background-color: #A1887F;
-    color: white;
-}
-
-/* Mostrar correctamente las ventanas emergentes */
-.popup-active {
+.help-options.active { /* Clase para mostrar el menú con JS */
     display: block;
 }
 
-/* Información de contacto dentro de la ventana emergente */
-.contact-info {
-    background-color: #F5F5F5;
-    padding: 10px;
+.help-options button {
+    display: block;
+    width: 100%;
+    padding: 8px 15px;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #4E342E;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin: 5px 0; /* Espacio entre los botones del menú */
+}
+
+.help-options button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilos para el nuevo texto de bienvenida en el header */
+.hero-text-header {
+    text-align: center; /* Centra el texto */
+    margin-top: 20px; /* Espacio superior para separarlo de la parte superior del header */
+    padding: 0 20px; /* Igual que .container */
+    max-width: 800px; /* Limita el ancho del texto para que no se estire demasiado */
+}
+
+.hero-text-header h2 {
+    font-size: 28px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.hero-text-header p {
+    font-size: 18px;
+    color: #ffffff;
+    line-height: 1.5;
+}
+
+
+/* ===========================================
+   SECCIONES PRINCIPALES - INDEX PRINCIPAL
+============================================ */
+
+/* Sección de Características */
+.features-section {
+    background-color: #F8F8F8;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.features-section h2 {
+    font-size: 32px;
+    color: #4E342E;
+    margin-bottom: 40px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature-item {
+    background-color: #fff;
+    padding: 30px;
     border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    text-align: left;
+}
+
+.feature-item h3 {
+    font-size: 20px;
+    color: #A1887F;
     margin-bottom: 15px;
 }
 
-.contact-info p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #4E342E;
+.feature-item p {
+    font-size: 16px;
+    color: #6D4C41;
+    line-height: 1.6;
 }
 
-/* INICIO DE SECION Y REGISTRO */
+/* Sección Acerca de */
+.about-section {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.about-section h2 {
+    font-size: 32px;
+    color: #4E342E;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    justify-content: center; /* Centra en pantallas pequeñas */
+}
+
+.about-image {
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.about-text {
+    flex: 1; /* Permite que el texto ocupe el espacio restante */
+    min-width: 300px; /* Ancho mínimo para el texto antes de envolver */
+}
+
+.about-text p {
+    font-size: 17px;
+    color: #6D4C41;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* ===========================================
+   FOOTER - INDEX PRINCIPAL
+============================================ */
+footer {
+    background-color: #4E342E;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.footer-container p {
+    margin: 0;
+    font-size: 15px;
+}
+
+/* ===========================================
+   POP-UPS (Ventanas Emergentes)
+============================================ */
 .popup-form {
-    display: none;
+    display: none; /* Oculto por defecto */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #FFFFFF;
+    background-color: #fff;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
-    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000; /* Para que esté por encima del overlay */
+    width: 90%;
+    max-width: 400px;
+    box-sizing: border-box; /* Incluye padding en el ancho */
+    animation: fadeIn 0.3s ease-out; /* Animación de entrada */
 }
 
-.popup-form input {
-    width: 90%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #D7CCC8;
-    border-radius: 5px;
+/* Animación para aparecer */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* Animación para desaparecer (si se usa JS para quitar la clase) */
+@keyframes fadeOut {
+    from { opacity: 1; transform: translate(-50%, -50%); }
+    to { opacity: 0; transform: translate(-50%, -60%); }
+}
+
+/* Clase activa para mostrar el popup */
+.popup-form.popup-active {
+    display: block;
+}
+
+.popup-form h2 {
+    text-align: left; /* Cámbiate a 'left' */
+    color: #4E342E;
+    margin-bottom: 25px;
+    font-size: 30px; /* Tamaño de fuente ligeramente más grande */
+    margin-left: 10px; /* Agrega este margen para separarlo del borde */
+}   
+
+.popup-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #6D4C41;
+    font-weight: bold;
+}
+
+.popup-form input[type="text"],
+.popup-form input[type="email"],
+.popup-form input[type="password"],
+.popup-form select,
+.popup-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box; /* Incluye padding en el ancho */
 }
 
 .popup-form button {
-    margin-top: 10px;
-    padding: 8px 15px;
-    border-radius: 6px;
-    cursor: pointer;
+    display: block;
+    width: 100%;
+    padding: 12px;
     background-color: #A1887F;
     color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
 }
 
-.popup-active {
-    display: block;
-}
-
-body.popup-active::before {
-    content: "";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-
-/* ============================================
-   NAVEGACIÓN
-============================================ */
-nav ul {
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-    background-color: #795548;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 10px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    display: inline-block;
-}
-
-nav ul li a:hover {
-    background-color: #D7CCC8;
-}
-
-/* ============================================
-   INDEXENTRADAS.HTML - Sección de Entradas
-============================================ */
-/* Contenedor principal con estructura en columnas */
-.entradas-container {
-    display: grid;
-    grid-template-columns: 1fr 3fr; /* 1/4 y 3/4 de la pantalla */
-    gap: 20px;
-    margin: 30px;
-}
-
-/* Sección de emojis alineada a la izquierda */
-.estado-animo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #F5F5F5;
-    padding: 15px;
-    border-radius: 10px;
-    height: 100%; /* Asegura que ocupe el espacio correctamente */
-}
-
-/* Ajuste de los emojis */
-.estado-animo button {
-    font-size: 24px;
+.popup-form .close-btn {
+    position: absolute;
+    top: -5px; /* Arriba y abajo */
+    right: 0px; /* Izquierda y derecha */
     background: none;
     border: none;
+    font-size: 24px;
+    color: #888;
     cursor: pointer;
-    position: relative;
-}
-
-/* Mostrar el nombre de la emoción al pasar el cursor */
-.estado-animo button::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: black;
-    color: white;
     padding: 5px;
-    font-size: 12px;
-    border-radius: 5px;
-    display: none;
+    transition: color 0.2s ease;
 }
 
-.estado-animo button:hover::after {
-    display: block;
+.popup-form .close-btn:hover {
+    color: #888; /* O el color que tengas definido para el botón en estado normal */
 }
 
-/* Área de entrada alineada a la derecha */
-.entrada-section {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-}
 
-/* Cuadro de entrada sin opción de redimensionar */
-.entrada-text {
-    width: 100%;
-    height: 200px;
-    resize: none; /* Evita el redimensionado */
-    padding: 10px;
-    border: 1px solid #4E342E;
-    border-radius: 8px;
-}
-
-/* Estilos de los botones */
-.button-container {
-    display: flex;
-    gap: 10px;
-}
-
-.button-style {
-    background-color:#A1887F;
+/* ===========================================
+   ESTILOS GENERALES PARA OTRAS PÁGINAS (Entradas, Estado de Ánimo, Metas)
+   Se asume que estas páginas tienen un header más simple con nav
+============================================ */
+/* Header para indexEntradas, indexEstadoAnimo, indexMetas */
+body#indexEntradasPage header,
+body#indexEstadoAnimoPage header,
+body#indexMetasPage header {
+    background-color: #4E342E;
     color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    font-size: 16px;
-    transition: 0.3s;
-}
-
-.button-style:hover {
-    background-color: #A1887F;
-}
-
-.file-button {
-    background-color: #A1887F;
-}
-
-.file-button:hover {
-    background-color: #A1887F;
-}
-
-.edit-button {
-    background-color: #A1887F;
-}
-
-.edit-button:hover {
-    background-color: #A1887F;
-}
-
-/* Historial de entradas alineado abajo */
-.historial {
-    margin-top: 40px;
-    padding: 15px;
-    background-color: #FFF;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.1)
-}
-
-.historial {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 40px;
-    padding: 15px;
-    background-color: #FFF;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Estilos para futuras entradas */
-.historial .entrada-item {
-    width: 100%;
-    padding: 10px;
-    border-bottom: 1px solid #D7CCC8;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Botones de acción en el historial */
-.historial .action-buttons {
+body#indexEntradasPage header h1,
+body#indexEstadoAnimoPage header h1,
+body#indexMetasPage header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+body#indexEntradasPage header nav ul,
+body#indexEstadoAnimoPage header nav ul,
+body#indexMetasPage header nav ul {
+    list-style: none;
+    margin: 5;
+    padding: 0;
+    display: flex;
+    align-items: center; /* Alinea los ítems de navegación y el botón de configuración */
+    gap: 25px; /* Espacio entre los elementos del nav */
+}
+
+body#indexEntradasPage header nav ul li a,
+body#indexEstadoAnimoPage header nav ul li a,
+body#indexMetasPage header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    padding: 5px 0;
+    transition: color 0.3s ease;
+}
+
+body#indexEntradasPage header nav ul li a:hover,
+body#indexEstadoAnimoPage header nav ul li a:hover,
+body#indexMetasPage header nav ul li a:hover {
+    color: #A1887F;
+}
+
+/* Estilo del botón de configuración en las páginas secundarias */
+.config-icon {
+    font-size: 22px; /* Ajusta el tamaño del icono de engranaje */
+    line-height: 1; /* Asegura el alineado correcto */
+    background: none;
+    border: none;
+    padding: 0;
+    color: white; /* Color del icono */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.config-icon:hover {
+    color: #D7CCC8; /* Un tono más claro al pasar el ratón */
+}
+
+/* Menú desplegable de ayuda en las páginas secundarias */
+body#indexEntradasPage .help-options,
+body#indexEstadoAnimoPage .help-options,
+body#indexMetasPage .help-options {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 60px; /* Ajusta según la altura de tu header */
+    right: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 100;
+    min-width: 180px;
+    padding: 10px;
+    border-radius: 5px;
+    flex-direction: column; /* Para apilar los botones */
+    gap: 5px; /* Espacio entre los botones del menú */
+}
+
+body#indexEntradasPage .help-options.active,
+body#indexEstadoAnimoPage .help-options.active,
+body#indexMetasPage .help-options.active {
+    display: flex; /* Muestra el menú cuando está activo */
+}
+
+body#indexEntradasPage .help-options button,
+body#indexEstadoAnimoPage .help-options button,
+body#indexMetasPage .help-options button {
+    background: none;
+    border: none;
+    color: #4E342E;
+    padding: 8px 15px;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease;
+}
+
+body#indexEntradasPage .help-options button:hover,
+body#indexEstadoAnimoPage .help-options button:hover,
+body#indexMetasPage .help-options button:hover {
+    background-color: #f0f0f0;
+}
+
+
+/* ===========================================
+   ESTILOS ESPECÍFICOS - INDEX ENTRADAS
+============================================ */
+.entradas-container {
+    display: flex;
+    gap: 30px;
+    padding: 30px 20px;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.estado-animo {
+    flex: 1; /* Ocupa 1/4 del espacio disponible */
+    max-width: 25%;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.estado-animo p {
+    font-size: 18px;
+    color: #4E342E;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.mood-btn {
+    font-size: 35px; /* Tamaño del emoji */
+    background: none;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    position: relative; /* Para el tooltip */
+}
+
+.mood-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Tooltip para los emojis */
+.mood-btn::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 110%; /* Posiciona el tooltip arriba del botón */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mood-btn:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.entrada-section {
+    flex: 3; /* Ocupa 3/4 del espacio disponible */
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.entrada-section h2 {
+    font-size: 24px;
+    color: #4E342E;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.entrada-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.entrada-section .button-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Estilos para el historial de entradas */
+.historial {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.historial h2 {
+    font-size: 24px;
+    color: #4E342E;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+#lista-entradas {
+    list-style: none;
+    padding: 0;
+}
+
+.entrada-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F8F8F8;
+    border: 1px solid #eee;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #6D4C41;
+}
+
+.entrada-item .action-buttons {
     display: flex;
     gap: 10px;
 }
 
-.historial .edit-button {
-    background-color: #A1887F;
+.entrada-item button {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 4px;
 }
 
-.historial .delete-button {
-    background-color: #A1887F;
+.entrada-item .edit-button {
+    background-color: #FFC107;
+}
+
+.entrada-item .edit-button:hover {
+    background-color: #FFA000;
+}
+
+.entrada-item .delete-button {
+    background-color: #F44336;
+}
+
+.entrada-item .delete-button:hover {
+    background-color: #D32F2F;
 }
 
 
-/* Centrar el título */
-header h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin: 20px auto;
-    display: block;
-}
-
-
-/* ============================================
-   INDEXESTADOANIMO.HTML - Seguimiento emocional
+/* ===========================================
+   ESTILOS ESPECÍFICOS - INDEX ESTADO DE ÁNIMO
 ============================================ */
-/* 📌 Contenedor principal más espacioso */
 .estado-animo-tracker {
-    max-width: 1200px; /* 📌 Aumentamos el ancho */
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #FFFFFF;
-    border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-/* 📌 Contenedor del calendario centrado */
-.calendario {
-    display: flex;
-    justify-content: center; /* 📌 Centra horizontalmente */
-    align-items: center; /* 📌 Centra verticalmente */
-    flex-direction: column;
-    margin: 30px auto;
-    padding: 20px;
-}
-
-/* 📌 Calendario con tamaño ajustado */
-#calendario-picker {
-    width: 350px; /* 📌 Ampliamos el tamaño */
-    padding: 14px;
-    font-size: 18px;
-    border: 2px solid #4E342E;
-    border-radius: 10px;
-    text-align: center;
-}
-
-
-/* 📌 Gráfica más amplia */
-.grafico-estados {
-    margin: 30px auto;
-    width: 90%;
-    max-width: 800px; /* 📌 Hacemos la gráfica más grande */
-}
-
-/* 📌 Mejora del contenedor de días destacados */
-.dias-destacados {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #F5F5F5;
-    border-radius: 8px;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* 📌 Mejor apariencia para reflexiones */
-.reflexiones {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #E3F2FD;
-    border-radius: 8px;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
-    font-style: italic;
-}
-
-
-
-/* ============================================
-   INDEXMETAS.HTML - Gestión de metas
-============================================ */
-.metas-container {
     max-width: 900px;
     margin: 30px auto;
-    padding: 20px;
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-/* 📌 Diseño con CSS Grid */
-.form-grid {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 15px;
+    grid-template-columns: 1fr 1fr; /* Dos columnas para secciones */
+    gap: 30px;
 }
 
-/* 📌 Distribución correcta */
-.form-grid input[type="text"] {
-    grid-column: span 2;
-}
-
-.form-grid textarea {
-    grid-column: span 2;
-    height: 100px;
-}
-
-.botones {
-    grid-column: span 2;
+.estado-animo-tracker h2 {
+    grid-column: 1 / -1; /* Ocupa ambas columnas */
     text-align: center;
+    font-size: 28px;
+    color: #4E342E;
+    margin-bottom: 25px;
 }
 
-.botones button {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    background-color: #A1887F;
-    color: #fff;
-    border-radius: 5px;
-}
-
-.botones button:hover {
-    background-color: #A1887F;
-}
-
-/* ============================================
-   CONFIGURACIÓN
-============================================ */
-
-/* 📌 Estilos del Menú */
-.config-menu {
-    position: fixed;
-    right: -300px;
-    top: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: #FFFFFF;
-    box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.2);
-    transition: right 0.3s ease-in-out;
+.estado-animo-tracker section {
     padding: 20px;
-    text-align: left;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #F8F8F8;
 }
 
-/* 📌 Botón de tuerca */
-.config-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
+.estado-animo-tracker section h3 {
     font-size: 20px;
+    color: #A1887F;
+    margin-bottom: 15px;
 }
 
-/* 📌 Opciones de configuración */
-.config-menu ul {
+/* Estilos para el calendario */
+.calendario #calendario-picker {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.calendario p {
+    font-size: 14px;
+    color: #777;
+    margin-top: 10px;
+}
+
+/* Estilos para la gráfica */
+.grafico-estados .grafico-container {
+    width: 100%;
+    height: 300px; /* Altura fija para la gráfica */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos para días destacados */
+#lista-dias-destacados {
     list-style: none;
-    padding: 10px 0;
-}
-
-.config-menu ul li {
-    margin: 10px 0;
-}
-
-/* 📌 Botón para cerrar */
-.close-menu {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-/* 📌 Activar menú */
-.config-menu.active {
-    right: 0;
-}
-
-.emoji-small {
-    font-size: 10px; /* Ajusta el tamaño según prefieras */
-}
-
-.config-icon {
-    font-size: 17px; /* Ajusta el valor según necesites */
-    line-height: 1;
-    background: none;
-    border: none;
     padding: 0;
 }
 
+#lista-dias-destacados li {
+    background-color: #EFEBE9;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #6D4C41;
+}
+
+/* Estilos para reflexiones automáticas */
+.reflexiones #mensaje-reflexion {
+    font-style: italic;
+    color: #555;
+    background-color: #EFEBE9;
+    padding: 15px;
+    border-left: 5px solid #A1887F;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+/* ===========================================
+   ESTILOS ESPECÍFICOS - INDEX METAS
+============================================ */
+.metas-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.metas-container h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #4E342E;
+    margin-bottom: 25px;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas principales */
+    gap: 30px;
+}
+
+.añadir-meta, .metas-activas, .progreso {
+    background-color: #F8F8F8;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.añadir-meta h3, .metas-activas h3, .progreso h3 {
+    font-size: 22px;
+    color: #A1887F;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.añadir-meta .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas para inputs */
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.añadir-meta .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.añadir-meta label {
+    font-size: 15px;
+    color: #6D4C41;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.añadir-meta input[type="text"],
+.añadir-meta select,
+.añadir-meta input[type="date"],
+.añadir-meta textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.añadir-meta textarea {
+    grid-column: 1 / -1; /* Ocupa ambas columnas */
+    height: 100px;
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+.añadir-meta .botones {
+    text-align: right;
+    margin-top: 15px;
+}
+
+.añadir-meta .add-meta {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 17px;
+    transition: background-color 0.3s ease;
+}
+
+.añadir-meta .add-meta:hover {
+    background-color: #388E3C;
+}
+
+/* Metas Activas */
+#lista-metas {
+    list-style: none;
+    padding: 0;
+}
+
+.meta-item {
+    background-color: #EFEBE9;
+    border: 1px solid #D7CCC8;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column; /* Apila el contenido y los botones */
+    gap: 10px;
+}
+
+.meta-item h4 {
+    font-size: 18px;
+    color: #4E342E;
+    margin: 0 0 5px 0;
+}
+
+.meta-item p {
+    font-size: 15px;
+    color: #6D4C41;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.meta-item .meta-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.meta-item .meta-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.meta-item .meta-actions button {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.meta-item .edit-meta {
+    background-color: #FFC107;
+}
+
+.meta-item .edit-meta:hover {
+    background-color: #FFA000;
+}
+
+.meta-item .complete-meta {
+    background-color: #4CAF50; /* Verde para completar */
+}
+
+.meta-item .complete-meta:hover {
+    background-color: #388E3C;
+}
+
+.meta-item .delete-meta {
+    background-color: #F44336; /* Rojo para eliminar */
+}
+
+.meta-item .delete-meta:hover {
+    background-color: #D32F2F;
+}
+
+/* Progreso de Metas */
+.progreso p#mensaje-progreso {
+    text-align: center;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.progreso .grafico-container {
+    width: 100%;
+    max-width: 400px; /* Tamaño del gráfico de progreso */
+    height: 250px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===========================================
+   ADICIONALES - MODOS
+============================================ */
 /* Ejemplo de estilos para Modo Oscuro */
 .dark-mode {
     background-color: #121212;
     color: #f0f0f0;
 }
 
-.config-menu {
-    position: fixed;
-    right: -300px;
-    top: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: #FFFFFF;
-    box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.2);
-    transition: right 0.3s ease-in-out;
-    padding: 20px;
-    text-align: left;
+/* Estilos para tooltips que puedan estar en otros lugares */
+.tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Posiciona el tooltip arriba del elemento */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
-/* Clase para mostrar el menú */
-.config-menu.active {
-    right: 0;
+.mood-btn:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
 }
 
-
-/* ============================================
-   PIE DE PÁGINA ESTILIZADO
+/* ===========================================
+   MEDIA QUERIES (RESPONSIVIDAD)
 ============================================ */
-footer {
-    text-align: center; /* 📌 Centrar contenido */
-    background-color: #4E342E; /* 📌 Color elegante */
-    padding: 20px;
-    border-radius: 8px 8px 0 0;
-    color: white;
+@media (max-width: 768px) {
+    /* Header Principal (index.html) */
+    .header-top-flex {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 15px; /* Ajuste para espacio en móvil */
+    }
+
+    .brand-container {
+        margin-bottom: 15px; /* Espacio entre el logo/título y los botones */
+    }
+
+    .header-right-buttons {
+        flex-direction: column; /* Apila los botones de auth y el menú de ayuda */
+        width: 100%;
+        gap: 15px; /* Espacio entre los grupos apilados */
+    }
+
+    .auth-buttons {
+        justify-content: center; /* Centra los botones si se apilan */
+        width: 100%;
+    }
+
+    .help-menu {
+        width: 100%;
+        display: flex; /* Para centrar el botón de configuración */
+        justify-content: center;
+    }
+
+    .help-options {
+        position: static; /* Para que el menú se expanda hacia abajo en el flujo normal */
+        width: auto; /* Ancho automático para adaptarse al contenido */
+        max-width: 90%; /* Limita el ancho en móviles */
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .hero-text-header h2 {
+        font-size: 26px; /* Reduce el tamaño de la fuente en móviles */
+    }
+
+    .hero-text-header p {
+        font-size: 16px; /* Reduce el tamaño de la fuente en móviles */
+    }
+
+    /* Sección "Acerca de" */
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-image {
+        max-width: 80%; /* Ajusta el tamaño de la imagen en móviles */
+        margin-bottom: 20px;
+    }
+
+    /* Pop-ups */
+    .popup-form {
+        width: 95%; /* Mayor ancho en pantallas pequeñas */
+        padding: 20px;
+    }
+
+    /* Header para otras páginas (Entradas, Estado de Ánimo, Metas) */
+    body#indexEntradasPage header,
+    body#indexEstadoAnimoPage header,
+    body#indexMetasPage header {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 10px;
+    }
+
+    body#indexEntradasPage header h1,
+    body#indexEstadoAnimoPage header h1,
+    body#indexMetasPage header h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    body#indexEntradasPage header nav ul,
+    body#indexEstadoAnimoPage header nav ul,
+    body#indexMetasPage header nav ul {
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+        justify-content: center;
+        gap: 15px;
+    }
+
+    /* Contenedor de Entradas */
+    .entradas-container {
+        flex-direction: column;
+        padding: 20px 10px;
+        margin-top: 20px;
+    }
+
+    .estado-animo {
+        max-width: 100%; /* Ocupa todo el ancho disponible */
+        margin-bottom: 20px;
+    }
+
+    .entrada-section {
+        flex: auto; /* Se ajusta automáticamente */
+    }
+
+    .entrada-section .button-container {
+        flex-direction: column; /* Apila los botones de enviar/editar/archivo */
+        align-items: center;
+    }
+
+    /* Historial de Entradas */
+    .historial {
+        padding: 20px 10px;
+        margin-top: 20px;
+    }
+
+    .entrada-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .entrada-item .action-buttons {
+        width: 100%;
+        justify-content: flex-end; /* Alinea los botones de acción a la derecha */
+    }
+
+    /* Estado de Ánimo Tracker */
+    .estado-animo-tracker {
+        grid-template-columns: 1fr; /* Una sola columna */
+        padding: 20px;
+    }
+
+    .estado-animo-tracker section {
+        padding: 15px;
+    }
+
+    .estado-animo-tracker h2 {
+        font-size: 24px;
+    }
+
+    .grafico-estados .grafico-container {
+        height: 250px; /* Ajusta la altura del gráfico en móviles */
+    }
+
+    /* Metas Container */
+    .metas-container {
+        padding: 20px;
+    }
+
+    .grid-layout {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+
+    .añadir-meta .form-grid {
+        grid-template-columns: 1fr; /* Una sola columna para los campos del formulario */
+    }
+
+    .añadir-meta .botones {
+        text-align: center; /* Centra el botón de añadir meta */
+    }
+
+    .meta-item .meta-actions {
+        justify-content: center; /* Centra los botones de acción en la meta */
+    }
 }
 
-footer p {
-    font-size: 1.1em; /* 📌 Tamaño mejorado */
-    line-height: 1.6;
-    margin: 10px auto;
-    max-width: 600px; /* 📌 Limitar ancho para mejor lectura */
+/* Media Query para pantallas muy pequeñas (ej. 320px de ancho) */
+@media (max-width: 480px) {
+    .logo-container img {
+        height: 40px;
+    }
+
+    .title-container h1 {
+        font-size: 20px;
+    }
+
+    .title-container p {
+        font-size: 12px;
+    }
+
+    .auth-buttons button,
+    .button-style {
+        padding: 8px 15px;
+        font-size: 14px;
+        width: auto;
+    }
+
+    .hero-text-header h2 {
+        font-size: 22px;
+    }
+
+    .hero-text-header p {
+        font-size: 15px;
+    }
+
+    .feature-item {
+        padding: 20px;
+    }
+
+    .feature-item h3 {
+        font-size: 18px;
+    }
+
+    .feature-item p {
+        font-size: 14px;
+    }
+
+    .about-image {
+        max-width: 100%;
+    }
+
+    .popup-form h2 {
+        font-size: 22px;
+    }
+
+    .popup-form input,
+    .popup-form select,
+    .popup-form textarea,
+    .popup-form button {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .mood-btn {
+        font-size: 30px;
+        padding: 8px;
+    }
+
+    .estado-animo p {
+        font-size: 16px;
+    }
+
+    .entrada-section h2,
+    .historial h2,
+    .estado-animo-tracker h2,
+    .metas-container h2 {
+        font-size: 20px;
+    }
 }

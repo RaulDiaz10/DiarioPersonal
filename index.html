@@ -6,152 +6,80 @@
     <title>Mood Journal</title>
     <link rel="stylesheet" href="./Styles/Styles.css">
     <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.png">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> 
-    <!-- Si requieres Font Awesome (u otra librería) para íconos, agrégala aquí; de lo contrario, usamos el emoji ⚙️ -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
 </head>
 <body>
     <header>
-        <div class="container">
-            <div class="header-flex">
-
-                <!-- Logo -->
+        <div class="container header-top-flex">
+            <div class="brand-container">
                 <div class="logo-container">
                     <img src="./Recursos/Imagenes D.P/inconoBuscador.png" alt="Logo Mood Journal">
                 </div>
-
-                <!-- Título y descripción -->
                 <div class="title-container">
                     <h1>Mood Journal</h1>
-                    <p>Tu compañero diario para registrar tus emociones, metas y pensamientos.</p>
-                </div>
-
-                <!-- Menú de ayuda -->
-                <div class="help-menu">
-                    <button class="help-btn" id="toggleHelpMenu">Ayuda ▼</button>
-                    <div class="help-options">
-                        <a href="#" id="dejarComentario">Dejar comentario</a>
-                        <a href="#" id="pedirInformacion">Pedir información</a>
-                    </div>
                 </div>
             </div>
 
-                <!-- Contenedor de autenticación -->
-                <div class="auth-container">
-                    <button id="iniciarSesionBtn" class="button-style">Iniciar Sesión</button>
-                    <button id="registroBtn" class="button-style">Registro</button>
+            <div class="header-right-buttons">
+                <div class="auth-buttons">
+                    <button id="iniciarSesionBtn">Iniciar Sesión</button>
+                    <button id="registroBtn">Registrarse</button>
                 </div>
+
+                <div class="help-menu">
+                    <button class="config-icon" id="config-btn">⚙️</button>
+                    <div class="help-options" id="help-options-menu">
+                        <button class="close-menu" id="closeHelpMenu">X</button>
+                        <button id="infoGeneralBtn">Pedir Información</button>
+                        <button id="comentarioBtn">Dejar Comentario</button>
+                        <button id="darkModeToggle">Modo Oscuro</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container hero-text-header">
+            <h2>Bienvenido a tu Espacio Personal</h2>
+            <p>Un diario digital interactivo para registrar tus pensamientos, estados de ánimo y metas.</p>
         </div>
     </header>
 
-    <!-- Ventana emergente para dejar comentario -->
-    <div class="popup-form" id="comentarioPopup">
-        <h2>Dejar Comentario</h2>
-
-        <label for="nombreComentario">Nombre:</label>
-        <input type="text" id="nombreComentario" placeholder="Tu nombre">
-
-        <label for="correoComentario">Correo:</label>
-        <input type="email" id="correoComentario" placeholder="Tu correo">
-
-        <label for="motivoComentario">Motivo:</label>
-        <select id="motivoComentario">
-            <option value="" disabled selected>Selecciona un motivo...</option>
-            <option value="sugerencia">Sugerencia</option>
-            <option value="problema">Reportar un problema</option>
-            <option value="otro">Otro</option>
-        </select>
-
-        <!-- Cuadro de comentario que aparece al elegir un motivo -->
-        <textarea id="comentarioTexto" placeholder="Escribe tu comentario aquí..." style="display: none;"></textarea>
-
-        <div class="popup-buttons">
-            <button id="closeComentarioPopup">Cerrar</button>
-            <button id="enviarComentario" style="display: none;">Enviar</button>
-        </div>
-    </div>
-
-    <!-- Ventana emergente para solicitar información -->
-    <div class="popup-form" id="infoContactoPopup">
-        <h2>Solicitar Información / Contacto</h2>
-
-        <div class="contact-info">
-            <p><strong>Teléfono:</strong> 33107970454</p>
-            <p><strong>Email:</strong> MoodJournal@gmail.com</p>
-            <p><strong>Horario de atención:</strong> Lunes a Viernes, 9 AM - 6 PM</p>
-        </div>
-
-        <label for="nombreInfoContacto">Nombre:</label>
-        <input type="text" id="nombreInfoContacto" placeholder="Tu nombre">
-
-        <label for="correoInfoContacto">Correo:</label>
-        <input type="email" id="correoInfoContacto" placeholder="Tu correo">
-
-        <label for="mensajeInfoContacto">Mensaje:</label>
-        <textarea id="mensajeInfoContacto" placeholder="Escribe tu mensaje aquí..."></textarea>
-
-        <div class="popup-buttons">
-            <button id="closeInfoContactoPopup">Cerrar</button>
-            <button id="enviarInfoContacto">Enviar</button>
-        </div>
-    </div>
-
-    <!-- Mensaje de agradecimiento -->
-    <div class="popup-form" id="agradecimientoPopup" style="display: none;">
-        <h2>¡Gracias!</h2>
-        <p>Tu solicitud ha sido recibida y la revisaremos pronto.</p>
-        <button id="closeAgradecimientoPopup">Cerrar</button>
-    </div>
-
     <main>
-        <div class="container main-container">
-            <section class="info-section">
-                <div class="section-content">
-                    <h2>¿Qué es Mood Journal?</h2>
-                    <div class="text-block">
-                        <p>
-                            Mood Journal es una plataforma diseñada para ayudarte a llevar un seguimiento
-                            de tus emociones, metas y progreso diario. Nos enfocamos en brindarte un espacio seguro,
-                            personalizable y funcional para que desarrolles una mejor relación contigo mismo.
-                        </p>
-                        <p>
-                            Aquí podrás documentar tus pensamientos, reflexionar sobre tus logros y analizar
-                            patrones emocionales para desarrollar hábitos positivos. Nuestra interfaz intuitiva
-                            facilita la experiencia de uso.
-                        </p>
+        <div class="features-section">
+            <section class="container">
+                <h2>¿Qué puedes hacer con Mood Journal?</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>Registra tus Entradas</h3>
+                        <p>Escribe tus pensamientos y experiencias diarias, acompañadas de tu estado de ánimo.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Monitorea tu Ánimo</h3>
+                        <p>Visualiza gráficamente la evolución de tus emociones a lo largo del tiempo.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Define y Sigue Metas</h3>
+                        <p>Establece objetivos personales y observa tu progreso hacia ellos.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Reflexiona y Crece</h3>
+                        <p>Conoce mejor tus patrones emocionales y fomenta tu bienestar personal.</p>
                     </div>
                 </div>
             </section>
+        </div>
 
-            <div class="image-wrapper">
-                <img src="./Recursos/Imagenes D.P/ejemploUso.png" alt="Persona usando Mood Journal">
-            </div>
-
-            <section class="info-section">
-                <div class="section-content">
-                    <h2>¿Cómo funciona?</h2>
-                    <div class="text-block">
+        <div class="about-section">
+            <section class="container">
+                <h2>Acerca de Mood Journal</h2>
+                <div class="about-content">
+                    <img src="./Recursos/Imagenes D.P/ejemploUso.png" alt="Imagen del diario" class="about-image">
+                    <div class="about-text">
                         <p>
-                            Mood Journal te permite añadir entradas diarias relacionadas con tus emociones, establecer
-                            metas personales, y visualizar tu progreso mediante herramientas simples pero efectivas.
-                            Todo esto está diseñado para que te conozcas mejor y alcances tu máximo potencial.
+                            Mood Journal es más que un simple diario; es una herramienta diseñada para ayudarte a cultivar la autoconciencia y el crecimiento personal.
+                            Con una interfaz intuitiva y funcionalidades poderosas, te acompañamos en tu viaje emocional.
                         </p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="info-section">
-                <div class="section-content">
-                    <h2>Beneficios Clave</h2>
-                    <div class="text-block">
-                        <ul>
-                            <li><strong>Mejora tu bienestar emocional:</strong> Identifica patrones y trabaja en tus emociones.</li>
-                            <li><strong>Organización y enfoque:</strong> Establece metas claras y realiza un seguimiento de tus progresos.</li>
-                            <li><strong>Reflexión activa:</strong> Revisa tus logros y motívate a mejorar cada día.</li>
-                            <li><strong>Personalización:</strong> Configura la plataforma para que se ajuste a tus necesidades específicas.</li>
-                        </ul>
                         <p>
-                            Si buscas una herramienta para explorar tus emociones, establecer metas y mantenerte inspirado,
+                            Ya sea que busques una herramienta para explorar tus emociones, establecer metas y mantenerte inspirado,
                             Mood Journal es la opción ideal.
                         </p>
                     </div>
@@ -160,29 +88,69 @@
         </div>
     </main>
 
-<!-- Ventana emergente para iniciar sesión -->
-<div class="popup-form" id="loginPopup">
-    <h2>Iniciar Sesión</h2>
-    <label for="username">Correo:</label> <!-- 🔹 Cambio de id -->
-    <input type="text" id="username">
-    <label for="password">Contraseña:</label> <!-- 🔹 Cambio de id -->
-    <input type="password" id="password">
-    <button id="closeLoginPopup">Cerrar</button>
-    <button id="loginBtn">Iniciar sesión</button>
-</div>
+    <div class="popup-form" id="loginPopup">
+        <div class="popup-header">
+            <h2>Iniciar Sesión</h2>
+            <button id="closeLoginPopup" class="close-btn">Regresar</button>
+        </div>
+        <label for="username">Correo:</label>
+        <input type="text" id="username">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password">
+        <button id="loginBtn">Iniciar sesión</button>
+    </div>
 
-<!-- Ventana emergente para registro -->
-<div class="popup-form" id="registroPopup">
-    <h2>Registro</h2>
-    <label for="newUsername">Usuario:</label>
-    <input type="text" id="newUsername">
-    <label for="newEmail">Correo:</label>
-    <input type="email" id="newEmail">
-    <label for="newPassword">Contraseña:</label>
-    <input type="password" id="newPassword">
-    <button id="closeRegistroPopup">Cerrar</button>
-    <button id="registrarBtn">Registrarse</button>
-</div>
+    <div class="popup-form" id="registroPopup">
+        <div class="popup-header">
+            <h2>Registro</h2>
+            <button id="closeRegistroPopup" class="close-btn">Regresar</button>
+        </div>
+        <label for="newUsername">Usuario:</label>
+        <input type="text" id="newUsername">
+        <label for="newEmail">Correo:</label>
+        <input type="email" id="newEmail">
+        <label for="newPassword">Contraseña:</label>
+        <input type="password" id="newPassword">
+        <button id="registrarBtn">Registrarse</button>
+    </div>
+
+    <div class="popup-form" id="comentarioPopup">
+        <button id="closeComentarioPopup" class="close-btn">Regresar</button>
+        <h2>Dejar un Comentario</h2>
+        <label for="nombreComentario">Tu Nombre:</label>
+        <input type="text" id="nombreComentario" required>
+        <label for="correoComentario">Tu Correo:</label>
+        <input type="email" id="correoComentario" required>
+        <label for="tipoComentario">Motivo:</label>
+        <select id="tipoComentario" required>
+            <option value="">Selecciona un motivo</option>
+            <option value="sugerencia">Sugerencia</option>
+            <option value="problema">Reportar un Problema</option>
+            <option value="felicitacion">Felicitación</option>
+            <option value="otro">Otro</option>
+        </select>
+        <textarea id="comentarioTexto" placeholder="Escribe tu comentario aquí..." style="display:none;" required></textarea>
+        <button id="enviarComentario" style="display:none;">Enviar Comentario</button>
+    </div>
+
+    <div class="popup-form" id="infoContactoPopup">
+        <button id="closeInfoContactoPopup" class="close-btn">Regresar</button>
+        <h2>Pedir Información</h2>
+            <p><b>Contacanos al numero:</b> 3310790455</p>
+            <p><b>Contacanos al correo:</b> infoMJ@gmail.com</p>
+        <label for="nombreInfoContacto">Tu Nombre:</label>
+        <input type="text" id="nombreInfoContacto" required>
+        <label for="correoInfoContacto">Tu Correo:</label>
+        <input type="email" id="correoInfoContacto" required>
+        <textarea id="mensajeInfoContacto" placeholder="Escribe tu pregunta o solicitud aquí..." required></textarea>
+        <button id="enviarInfoContacto">Enviar Solicitud</button>
+    </div>
+
+    <div class="popup-form" id="agradecimientoPopup">
+        <button id="closeAgradecimientoPopup" class="close-btn">Regresar</button>
+        <h2>¡Gracias!</h2>
+        <p>Tu comentario/solicitud ha sido enviado. Te responderemos pronto.</p>
+    </div>
 
     <footer>
         <div class="container footer-container">
@@ -190,7 +158,6 @@
         </div>
     </footer>
 
-    <!-- Script principal -->
     <script src="./JS/Script.js"></script>
-</body>
+    </body>
 </html>

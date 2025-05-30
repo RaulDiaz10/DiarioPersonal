@@ -1,290 +1,273 @@
+// Server.js (Actualizado con rutas para completar y eliminar metas, y propiedad 'completada')
 const express = require("express");
 const fs = require("fs");
+const path = require("path"); // Necesario para gestionar rutas de archivos
 const cors = require("cors");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-const ENTRADAS_FILE = "./data/entradas.json";
-const ESTADO_ANIMO_FILE = "./data/estado_animo.json";
-const METAS_FILE = "./data/metas.json";
+
 const PORT = 3000;
-const USERS_FILE = "./data/users.json"; // 🔹 Archivo donde se almacenarán los usuarios
+const DATA_DIR = "./data"; // Directorio donde se guardarán los JSON de datos
 
-// 📌 Leer el archivo de usuarios
-const leerUsuarios = () => {
-    if (!fs.existsSync(USERS_FILE)) return [];
-    return JSON.parse(fs.readFileSync(USERS_FILE, "utf-8"));
-};
+// --- Configuración Inicial y Funciones Globales ---
 
-// 📌 Guardar usuarios en el archivo
-const guardarUsuarios = (usuarios) => {
-    try {
-        fs.writeFileSync(USERS_FILE, JSON.stringify(usuarios, null, 2), "utf-8");
-    } catch (error) {
-        console.error("Error al guardar usuarios:", error);
-    }
-};
+// Crear el directorio 'data' si no existe
+if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    console.log(`Directorio '${DATA_DIR}' creado.`);
+}
 
-// 📌 Registro de usuario
-app.post("/registro", (req, res) => {
-    const { username, email, password } = req.body;
-    let usuarios = leerUsuarios();
+// Rutas de los archivos de datos
+const USERS_FILE = path.join(DATA_DIR, "users.json");
+const ENTRADAS_FILE = path.join(DATA_DIR, "entradas.json");
+const COMENTARIOS_FILE = path.join(DATA_DIR, "comentarios.json");
+const INFO_REQUESTS_FILE = path.join(DATA_DIR, "info_requests.json");
+const METAS_FILE = path.join(DATA_DIR, "metas.json");
+// ESTADO_ANIMO_FILE no se usará si el gráfico se basa en 'entradas'
 
-    if (usuarios.some(user => user.email === email)) {
-        return res.json({ message: "❌ Este correo ya está registrado." });
-    }
-
-    const nuevoUsuario = { username, email, password };
-    usuarios.push(nuevoUsuario);
-    guardarUsuarios(usuarios);
-
-    res.json({ message: "✅ Registro exitoso.", usuario: email });
-});
-
-// 📌 Inicio de sesión
-app.post("/login", (req, res) => {
-    const { email, password } = req.body;
-    const usuarios = leerUsuarios();
-
-    const usuarioEncontrado = usuarios.find(user => user.email === email && user.password === password);
-
-    if (!usuarioEncontrado) {
-        return res.json({ message: "❌ Usuario o contraseña incorrectos." });
-    }
-
-    res.json({ message: "✅ Inicio de sesión exitoso.", usuario: email });
-});
-
-// 📌 Iniciar servidor
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-});
-
-
-// 📄 MENU DE AYUDA
-const COMMENTS_FILE = "./data/comentarios.json"; // 🔹 Archivo donde se almacenan los comentarios
-const INFO_REQUESTS_FILE = "./data/info_requests.json"; // 🔹 Archivo para las solicitudes de información
-
-// 📌 Funciones de lectura y escritura
+// Funciones Únicas de lectura y escritura para todos los archivos JSON
 const leerArchivo = (ruta) => {
-    if (!fs.existsSync(ruta)) return [];
-    return JSON.parse(fs.readFileSync(ruta, "utf-8"));
+    try {
+        if (!fs.existsSync(ruta)) {
+            // Si el archivo no existe, devuelve un array vacío en lugar de lanzar un error
+            return [];
+        }
+        const data = fs.readFileSync(ruta, "utf8");
+        return JSON.parse(data);
+    } catch (error) {
+        console.error(`Error al leer el archivo ${ruta}:`, error);
+        // Si hay un error de parseo (JSON inválido), también devuelve un array vacío
+        return [];
+    }
 };
 
 const guardarArchivo = (ruta, datos) => {
     try {
-        fs.writeFileSync(ruta, JSON.stringify(datos, null, 2), "utf-8");
+        fs.writeFileSync(ruta, JSON.stringify(datos, null, 2), "utf8");
     } catch (error) {
-        console.error(`❌ Error al escribir en ${ruta}:`, error);
+        console.error(`Error al escribir en el archivo ${ruta}:`, error);
     }
 };
 
-// 📌 Guardar comentario
-app.post("/comentario", (req, res) => {
-    try {
-        const { nombre, correo, motivo, mensaje } = req.body;
+// --- Rutas de la API ---
 
-        if (!nombre || !correo || !mensaje) {
-            return res.status(400).json({ message: "❌ Todos los campos son obligatorios." });
+// Ruta para el registro de usuarios
+app.post("/register", (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: "❌ Por favor, completa todos los campos para el registro." });
         }
 
-        console.log("📌 Datos recibidos:", req.body); // 🔹 Verifica qué datos llegan al servidor
+        const users = leerArchivo(USERS_FILE);
 
-        let comentarios = leerArchivo("./data/comentarios.json");
+        // Verificar si el usuario o el email ya existen
+        const userExists = users.some(user => user.username === username);
+        const emailExists = users.some(user => user.email === email);
 
-        const nuevoComentario = { nombre, correo, motivo, mensaje, fecha: new Date().toISOString() };
-        comentarios.push(nuevoComentario);
-        guardarArchivo("./data/comentarios.json", comentarios);
-
-        res.json({ message: "✅ Comentario enviado correctamente." });
-    } catch (error) {
-        console.error("❌ Error en /comentario:", error);
-        res.status(500).json({ message: "❌ Error interno del servidor." });
-    }
-});
-
-// 📌 Guardar solicitud de información
-app.post("/info", (req, res) => {
-    try {
-        const { nombre, correo, mensaje } = req.body;
-        let solicitudes = leerArchivo(INFO_REQUESTS_FILE);
-
-        const nuevaSolicitud = { nombre, correo, mensaje, fecha: new Date().toISOString() };
-        solicitudes.push(nuevaSolicitud);
-        guardarArchivo(INFO_REQUESTS_FILE, solicitudes);
-
-        res.json({ message: "✅ Solicitud de información enviada correctamente." });
-    } catch (error) {
-        console.error("❌ Error en /info:", error);
-        res.status(500).json({ message: "❌ Error interno del servidor." });
-    }
-});
-
-
-
-// 📄 INDEX ENTRADAS
-// 📌 Funciones de lectura y escritura (renombradas)
-const leerArchivo1 = (ruta) => {
-    if (!fs.existsSync(ruta)) return [];
-    return JSON.parse(fs.readFileSync(ruta, "utf-8"));
-};
-
-const guardarArchivo1 = (ruta, datos) => {
-    try {
-        fs.writeFileSync(ruta, JSON.stringify(datos, null, 2), "utf-8");
-    } catch (error) {
-        console.error(`❌ Error al escribir en ${ruta}:`, error);
-    }
-};
-
-// 📌 Guardar nueva entrada
-app.post("/entrada", (req, res) => {
-    try {
-        const { usuario, estadoAnimo, textoEntrada } = req.body;
-
-        if (!usuario || !estadoAnimo || !textoEntrada) {
-            return res.status(400).json({ message: "❌ Todos los campos son obligatorios." });
+        if (userExists) {
+            return res.status(409).json({ message: "❌ El nombre de usuario ya está en uso." });
+        }
+        if (emailExists) {
+            return res.status(409).json({ message: "❌ El correo electrónico ya está registrado." });
         }
 
-        let entradas = leerArchivo1(ENTRADAS_FILE);
+        users.push({ id: Date.now(), username, email, password }); // En un proyecto real, se debería hashear la contraseña
+        guardarArchivo(USERS_FILE, users);
 
-        const nuevaEntrada = { usuario, estadoAnimo, textoEntrada, fecha: new Date().toISOString() };
-        entradas.push(nuevaEntrada);
-        guardarArchivo1(ENTRADAS_FILE, entradas);
-
-        res.json({ message: "✅ Entrada guardada exitosamente." });
+        res.status(201).json({ message: "✅ Usuario registrado con éxito." });
     } catch (error) {
-        console.error("❌ Error en /entrada:", error);
-        res.status(500).json({ message: "❌ Error interno del servidor." });
+        console.error("❌ Error en /register:", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al registrar usuario." });
     }
 });
 
-// 📌 Obtener historial de entradas
+// Ruta para el inicio de sesión
+app.post("/login", (req, res) => {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password) {
+            return res.status(400).json({ message: "❌ Por favor, ingresa tu correo/usuario y contraseña." });
+        }
+
+        const users = leerArchivo(USERS_FILE);
+        // En un proyecto real, compararíamos contraseñas hasheadas
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+            // En un proyecto real, aquí generarías un token de sesión (JWT)
+            res.json({ message: "✅ Inicio de sesión exitoso.", user: { id: user.id, username: user.username } });
+        } else {
+            res.status(401).json({ message: "❌ Nombre de usuario o contraseña incorrectos." });
+        }
+    } catch (error) {
+        console.error("❌ Error en /login:", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al iniciar sesión." });
+    }
+});
+
+// Rutas para Entradas Diarias
+app.post("/entradas", (req, res) => {
+    try {
+        const { titulo, texto, estadoAnimo, fecha } = req.body;
+        if (!titulo || !texto || !estadoAnimo || !fecha) {
+            return res.status(400).json({ message: "❌ Faltan campos obligatorios para la entrada." });
+        }
+
+        const entradas = leerArchivo(ENTRADAS_FILE);
+        entradas.push({ _id: Date.now().toString(), titulo, texto, estadoAnimo, fecha }); // Usamos _id para consistencia con MongoDB
+        guardarArchivo(ENTRADAS_FILE, entradas);
+
+        res.status(201).json({ message: "✅ Entrada guardada con éxito." });
+    } catch (error) {
+        console.error("❌ Error en /entradas (POST):", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al guardar la entrada." });
+    }
+});
+
 app.get("/entradas", (req, res) => {
     try {
-        const entradas = leerArchivo1(ENTRADAS_FILE);
+        const entradas = leerArchivo(ENTRADAS_FILE);
         res.json(entradas);
     } catch (error) {
-        console.error("❌ Error en /entradas:", error);
-        res.status(500).json({ message: "❌ Error interno del servidor." });
+        console.error("❌ Error en /entradas (GET):", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al obtener las entradas." });
     }
 });
 
-// 📌 Iniciar servidor
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-});
-
-
-// 📄 INDEX ESTADO DE ANIMO
-// 📌 Funciones de lectura y escritura (renombradas para evitar conflictos)
-const leerArchivo2 = (ruta) => {
-    if (!fs.existsSync(ruta)) return [];
-    return JSON.parse(fs.readFileSync(ruta, "utf-8"));
-};
-
-const guardarArchivo2 = (ruta, datos) => {
+// Eliminar entrada
+app.delete("/entradas/:id", (req, res) => {
     try {
-        fs.writeFileSync(ruta, JSON.stringify(datos, null, 2), "utf-8");
-    } catch (error) {
-        console.error(`❌ Error al escribir en ${ruta}:`, error);
-    }
-};
+        const { id } = req.params;
+        let entradasData = leerArchivo(ENTRADAS_FILE);
+        const initialLength = entradasData.length;
+        entradasData = entradasData.filter(entrada => entrada._id !== id);
 
-// 📌 Guardar estado de ánimo
-app.post("/estado-animo", (req, res) => {
-    try {
-        const { usuario, estadoAnimo, fecha } = req.body;
-
-        if (!usuario || !estadoAnimo || !fecha) {
-            return res.status(400).json({ message: "❌ Todos los campos son obligatorios." });
+        if (entradasData.length === initialLength) {
+            return res.status(404).json({ message: "❌ Entrada no encontrada para eliminar." });
         }
 
-        let estadoAnimoData = leerArchivo2(ESTADO_ANIMO_FILE);
-        estadoAnimoData.push({ usuario, estadoAnimo, fecha });
-
-        guardarArchivo2(ESTADO_ANIMO_FILE, estadoAnimoData);
-
-        res.json({ message: "✅ Estado de ánimo registrado exitosamente." });
+        guardarArchivo(ENTRADAS_FILE, entradasData);
+        res.json({ message: "✅ Entrada eliminada exitosamente." });
     } catch (error) {
-        console.error("❌ Error en /estado-animo:", error);
-        res.status(500).json({ message: "❌ Error interno del servidor." });
+        console.error("❌ Error en /entradas/:id (DELETE):", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al eliminar la entrada." });
     }
 });
 
-// 📌 Obtener estados de ánimo por usuario
-app.get("/estado-animo", (req, res) => {
+// Rutas para Comentarios (ACTUALIZADO para nombre y correo)
+app.post("/comentarios", (req, res) => {
     try {
-        const { usuario } = req.query;
-
-        if (!usuario) {
-            return res.status(400).json({ message: "❌ Se requiere usuario para obtener datos." });
+        const { nombre, correo, tipo, comentario } = req.body; // Añadidos nombre y correo
+        if (!nombre || !correo || !tipo || !comentario) { // Validación actualizada
+            return res.status(400).json({ message: "❌ Faltan campos obligatorios para el comentario (nombre, correo, tipo, comentario)." });
         }
 
-        const estadoAnimoData = leerArchivo2(ESTADO_ANIMO_FILE);
-        const datosUsuario = estadoAnimoData.filter(entry => entry.usuario === usuario);
+        const comentariosData = leerArchivo(COMENTARIOS_FILE);
+        // Guarda todos los campos
+        comentariosData.push({ nombre, correo, tipo, comentario, timestamp: new Date().toISOString() });
+        guardarArchivo(COMENTARIOS_FILE, comentariosData);
 
-        res.json(datosUsuario);
+        res.status(201).json({ message: "✅ Comentario enviado con éxito. ¡Gracias por tu opinión!" });
     } catch (error) {
-        console.error("❌ Error en /estado-animo:", error);
-        res.status(500).json({ message: "❌ Error interno del servidor." });
+        console.error("❌ Error en /comentarios:", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al guardar el comentario." });
     }
 });
 
-
-// 📄 INDEX METAS
-// 📌 Funciones de lectura y escritura (renombradas para evitar conflictos)
-const leerArchivo3 = (ruta) => {
-    if (!fs.existsSync(ruta)) return [];
-    return JSON.parse(fs.readFileSync(ruta, "utf-8"));
-};
-
-const guardarArchivo3 = (ruta, datos) => {
+// Ruta para guardar solicitudes de información
+app.post("/info-requests", (req, res) => {
     try {
-        fs.writeFileSync(ruta, JSON.stringify(datos, null, 2), "utf-8");
-    } catch (error) {
-        console.error(`❌ Error al escribir en ${ruta}:`, error);
-    }
-};
+        const { nombre, correo, mensaje } = req.body; // El mensaje ahora incluirá la info adicional desde el frontend
+        if (!nombre || !correo || !mensaje) {
+            return res.status(400).json({ message: "❌ Faltan campos obligatorios para la solicitud de información." });
+        }
 
-// 📌 Guardar nueva meta
+        const requestsData = leerArchivo(INFO_REQUESTS_FILE);
+        requestsData.push({ nombre, correo, mensaje, timestamp: new Date().toISOString() });
+        guardarArchivo(INFO_REQUESTS_FILE, requestsData);
+
+        res.json({ message: "✅ Solicitud de información enviada con éxito. Te contactaremos pronto." });
+    } catch (error) {
+        console.error("❌ Error en /info-requests:", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al procesar la solicitud de información." });
+    }
+});
+
+// Rutas para Gestión de Metas
 app.post("/metas", (req, res) => {
     try {
-        const { usuario, nombre, categoria, plazo, descripcion } = req.body;
-
-        if (!usuario || !nombre || !plazo || !descripcion) {
-            return res.status(400).json({ message: "❌ Todos los campos son obligatorios." });
+        const { nombre, categoria, plazo, descripcion } = req.body;
+        if (!nombre || !categoria || !plazo || !descripcion) {
+            return res.status(400).json({ message: "❌ Faltan campos obligatorios para la meta." });
         }
 
-        let metasData = leerArchivo3(METAS_FILE);
-        metasData.push({ usuario, nombre, categoria, plazo, descripcion });
+        const metas = leerArchivo(METAS_FILE);
+        metas.push({ _id: Date.now().toString(), nombre, categoria, plazo, descripcion, completada: false, fechaCreacion: new Date().toISOString().split('T')[0] });
+        guardarArchivo(METAS_FILE, metas);
 
-        guardarArchivo3(METAS_FILE, metasData);
-
-        res.json({ message: "✅ Meta registrada exitosamente." });
+        res.status(201).json({ message: "✅ Meta registrada con éxito." });
     } catch (error) {
-        console.error("❌ Error en /metas:", error);
-        res.status(500).json({ message: "❌ Error interno del servidor." });
+        console.error("❌ Error en /metas (POST):", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al registrar la meta." });
     }
 });
 
-// 📌 Obtener metas por usuario
 app.get("/metas", (req, res) => {
     try {
-        const { usuario } = req.query;
-
-        if (!usuario) {
-            return res.status(400).json({ message: "❌ Se requiere usuario para obtener metas." });
-        }
-
-        const metasData = leerArchivo3(METAS_FILE);
-        const metasUsuario = metasData.filter(meta => meta.usuario === usuario);
-
-        res.json(metasUsuario);
+        const metas = leerArchivo(METAS_FILE);
+        res.json(metas);
     } catch (error) {
-        console.error("❌ Error en /metas:", error);
-        res.status(500).json({ message: "❌ Error interno del servidor." });
+        console.error("❌ Error en /metas (GET):", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al obtener las metas." });
     }
 });
-app.listen(PORT, () => console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`));
+
+// Marcar meta como completada
+app.patch("/metas/:id/completar", (req, res) => {
+    try {
+        const { id } = req.params;
+        let metasData = leerArchivo(METAS_FILE);
+        const metaIndex = metasData.findIndex(meta => meta._id === id);
+
+        if (metaIndex === -1) {
+            return res.status(404).json({ message: "❌ Meta no encontrada." });
+        }
+
+        metasData[metaIndex].completada = true;
+        guardarArchivo(METAS_FILE, metasData);
+
+        res.json({ message: "✅ Meta marcada como completada." });
+    } catch (error) {
+        console.error("❌ Error en /metas/:id/completar:", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al completar meta." });
+    }
+});
+
+// Eliminar meta
+app.delete("/metas/:id", (req, res) => {
+    try {
+        const { id } = req.params;
+        let metasData = leerArchivo(METAS_FILE);
+        const initialLength = metasData.length;
+        metasData = metasData.filter(meta => meta._id !== id);
+
+        if (metasData.length === initialLength) {
+            return res.status(404).json({ message: "❌ Meta no encontrada para eliminar." });
+        }
+
+        guardarArchivo(METAS_FILE, metasData);
+        res.json({ message: "✅ Meta eliminada exitosamente." });
+    } catch (error) {
+        console.error("❌ Error en /metas/:id (DELETE):", error);
+        res.status(500).json({ message: "❌ Error interno del servidor al eliminar meta." });
+    }
+});
+
+
+// Iniciar el servidor
+app.listen(PORT, () => {
+    console.log(`Servidor Mood Journal en ejecución en http://localhost:${PORT}`);
+});

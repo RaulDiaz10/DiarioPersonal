@@ -1,10 +1,9 @@
-{
-  "prueba@gmail.com": [
-    {
-      "nombre": "Usuario Prueba",
-      "correo": "prueba@example.com",
-      "motivo": "Sugerencia",
-      "mensaje": "Me gustaría ver más opciones en el menú de ayuda."
-    }
-  ]
-}
+[
+  {
+    "nombre": "Raul",
+    "correo": "Caliz@gmail.com",
+    "tipo": "problema",
+    "comentario": "Ninguno",
+    "fecha": "2025-05-30T15:42:09.032Z"
+  }
+]

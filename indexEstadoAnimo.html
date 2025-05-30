@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="./Styles/Styles.css">
     <link rel="shortcut icon" href="./Recursos/Imagenes D.P/inconoBuscador.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
-<body>
+<body id="indexEstadoAnimoPage">
     <header>
         <h1>Mood Journal</h1>
         <nav>
@@ -19,22 +17,60 @@
                 <li><a href="./indexEntradas.html">Entradas</a></li>
                 <li><a href="./indexEstadoAnimo.html">Estado de Ánimo</a></li>
                 <li><a href="./indexMetas.html">Metas</a></li>
-                <button id="config-btn" class="config-icon">⚙️</button>
+                <button id="toggleHelpMenu" class="config-icon">⚙️</button>
             </ul>
         </nav>
     </header>
 
+    <div class="help-options common-page-menu" id="commonPageHelpMenu">
+        <button class="close-menu" id="closeCommonHelpMenu">X</button>
+        <button id="dejarComentario">Dejar Comentario</button>
+        <button id="pedirInformacion">Pedir Información</button>
+    </div>
+    <div class="popup-form" id="comentarioPopup">
+        <button id="closeComentarioPopup" class="close-btn">X</button>
+        <h2>Dejar un Comentario</h2>
+        <label for="nombreComentario">Tu Nombre:</label>
+        <input type="text" id="nombreComentario" required>
+        <label for="correoComentario">Tu Correo:</label>
+        <input type="email" id="correoComentario" required>
+        <label for="tipoComentario">Motivo:</label>
+        <select id="tipoComentario" required>
+            <option value="">Selecciona un motivo</option>
+            <option value="sugerencia">Sugerencia</option>
+            <option value="problema">Reportar un Problema</option>
+            <option value="felicitacion">Felicitación</option>
+            <option value="otro">Otro</option>
+        </select>
+        <textarea id="comentarioTexto" placeholder="Escribe tu comentario aquí..." style="display:none;" required></textarea>
+        <button id="enviarComentario" style="display:none;">Enviar Comentario</button>
+    </div>
+
+    <div class="popup-form" id="infoContactoPopup">
+        <button id="closeInfoContactoPopup" class="close-btn">X</button>
+        <h2>Pedir Información</h2>
+        <label for="nombreInfoContacto">Tu Nombre:</label>
+        <input type="text" id="nombreInfoContacto" required>
+        <label for="correoInfoContacto">Tu Correo:</label>
+        <input type="email" id="correoInfoContacto" required>
+        <textarea id="mensajeInfoContacto" placeholder="Escribe tu pregunta o solicitud aquí..." required></textarea>
+        <button id="enviarInfoContacto">Enviar Solicitud</button>
+    </div>
+
+    <div class="popup-form" id="agradecimientoPopup">
+        <button id="closeAgradecimientoPopup" class="close-btn">X</button>
+        <h2>¡Gracias!</h2>
+        <p>Tu comentario/solicitud ha sido enviado. Te responderemos pronto.</p>
+    </div>
     <article class="estado-animo-tracker">
         <h2>Seguimiento del Estado de Ánimo</h2>
 
-        <!-- 📌 Calendario Interactivo con Flatpickr -->
         <section class="calendario">
             <h3>Tu Calendario Emocional</h3>
             <input type="text" id="calendario-picker">
-            <p>* Selecciona un día para registrar tu estado de ánimo.</p>
+            <p>* Selecciona un día para ver tu estado de ánimo registrado.</p>
         </section>
 
-        <!-- 📌 Gráfica de Evolución Emocional con Chart.js -->
         <section class="grafico-estados">
             <h3>Evolución de tu Estado de Ánimo</h3>
             <div class="grafico-container">
@@ -42,22 +78,16 @@
             </div>
         </section>
 
-        <!-- 📌 Días Destacados -->
-        <section class="dias-destacados">   
+        <section class="dias-destacados">
             <h3>Días Destacados</h3>
             <ul id="lista-dias-destacados">
-                <li><b>03/04:</b> Día tranquilo 😌</li>
-                <li><b>05/04:</b> Día estresante 😡</li>
-                <li><b>06/04:</b> Día feliz 😊</li>
             </ul>
         </section>
 
-        <!-- 📌 Reflexiones Automáticas -->
         <section class="reflexiones">
             <h3>Reflexiones Automáticas</h3>
             <p id="mensaje-reflexion">
-                “Esta semana parece que hubo un progreso positivo en tu estado de ánimo. 
-                ¡Sigue cuidándote y disfrutando de momentos que te hagan sentir bien!”
+                “Registra tus estados de ánimo para ver tu evolución emocional.”
             </p>
         </section>
     </article>
@@ -66,6 +96,8 @@
         <p>&copy; 2025 Mood Journal. Todos los derechos reservados.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="./JS/Script.js"></script>
 </body>
 </html>

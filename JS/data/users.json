@@ -1,10 +1,14 @@
-{
-  "prueba@gmail.com": {
-    "password": "12345",
-    "username": "Raul"
+[
+  {
+    "id": 1,
+    "username": "Raul",
+    "email": "Caliz@gmail.com",
+    "password": "123456"
   },
-  "Caliz@gmail.com": {
-    "password": "12345",
-    "username": "Caliz"
+  {
+    "id": 2,
+    "username": "Sof",
+    "email": "Sofia10@gmail.com",
+    "password": "123456"
   }
-}
+]
